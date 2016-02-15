@@ -1,4 +1,4 @@
-/* Las Vegas Diamon Hotels Map
+/* Las Vegas Diamond Hotels Map
 ----------------------------------*/
 
 var app = app || {};
@@ -10,7 +10,7 @@ app.MapView        = app.MapView || {};
 
 /**
  * Callback function for Google Maps (see index.html)
- * Runs after the maps api is loded.
+ * This will run after the maps api is loaded.
  */
 var initApp = function() {
     app.hm  = new app.HotelModel();
@@ -18,10 +18,9 @@ var initApp = function() {
     app.hv  = new app.HotelView();
     app.mv  = new app.MapView();
 
-    app.hvm.init();
+    app.hm.init();
 };
 
-var test = {};
 
 app.HotelModel = function() {
     'use strict';
@@ -36,15 +35,6 @@ app.HotelModel = function() {
      * @property {number} diamonds - Diamond rating of hotel
      */
 
-};
-
-
-app.HotelViewModel = function() {
-    'use strict';
-
-    var self = this;
-    self.hotels = {};
-
     /**
      * Retrieves the hotels json from Firebase server
      *
@@ -52,25 +42,40 @@ app.HotelViewModel = function() {
      * @return {Hotels} - Hotel data in json notation
      */
     self.init = function() {
-        console.log('---app.HotelViewModel.init---');
+        var hotelsRef, hotels;
 
-        var hotelsRef = new Firebase('https://crackling-heat-3113.firebaseio.com/hotels');
+        hotelsRef = new Firebase('https://crackling-heat-3113.firebaseio.com/hotels');
 
         // Read the data only once https://www.firebase.com/docs/web/api/query/once.html
         hotelsRef.once('value', function(dataSnapshot) {
 
-        var hotels = dataSnapshot.val();
+        hotels = dataSnapshot.val();
 
         self.hotels = hotels;
 
-        app.mv.initMap(hotels);
+        app.hvm.init();
 
         }, function (errorObject) {
             // TODO: display error to user
             // TODO: return at least 5 hotels from local file?
             console.log("The read failed: " + errorObject.code);
         });
-        console.log('---END.HotelViewModel.init---');
+
+    };
+}; // HotelModel
+
+
+app.HotelViewModel = function() {
+    'use strict';
+
+    var self = this;
+
+    self.init = function() {
+        app.mv.initMap();
+    };
+
+    self.getHotels = function() {
+        return app.hm.hotels;
     };
 
 
@@ -112,7 +117,8 @@ app.MapView = function() {
 
 
         console.log("-----app.MapView.initMap----");
-        console.dir(data);
+        var h = app.hvm.getHotels();
+        console.dir(h);
 
 
         var mapDiv = document.getElementById('map');
