@@ -2,57 +2,57 @@
     "hotels": [
         {
             "name": "ARIA Resort and Casino Las Vegas",
-            "location": {"lat": "36.1066653", "lng": "-115.1790977,17"},
-            "diamonds": "5"
+            "location": {"lat": 36.1066653, "lng": -115.1790977},
+            "diamonds": 5
         },
         {
             "name": "Bellagio Hotel and Casino",
-            "location": {"lat": "36.1126307", "lng": "-115.1788938"},
-            "diamonds": "5"
+            "location": {"lat": 36.1126307, "lng": -115.1788938},
+            "diamonds": 5
         },
         {   "name": "Four Seasons Hotel Las Vegas",
-            "location": {"lat": "36.0914381", "lng": "-115.1767325"},
-            "diamonds": "5"
+            "location": {"lat": 36.0914381, "lng": -115.1767325},
+            "diamonds": 5
         },
         {   "name": "Mandarin Oriental",
-            "location": {"lat": "36.1061553", "lng": "-115.176649"},
-            "diamonds": "5"
+            "location": {"lat": 36.1061553, "lng": -115.176649},
+            "diamonds": 5
         },
         {   "name": "Wynn Las Vegas",
-            "location": {"lat": "36.1267281", "lng": "-115.1678955"},
-            "diamonds": "5"
+            "location": {"lat": 36.1267281, "lng": -115.1678955},
+            "diamonds": 5
         },
         {   "name": "Mandalay Bay",
-            "location": {"lat": "36.091882", "lng": "-115.1774337"},
-            "diamonds": "4"
+            "location": {"lat": 36.091882, "lng": -115.1774337},
+            "diamonds": 4
         },
         {   "name": "MGM Grand",
-            "location": {"lat": "36.1025803", "lng": "-115.172442"},
-            "diamonds": "4"
+            "location": {"lat": 36.1025803, "lng": -115.172442},
+            "diamonds": 4
         },
         {   "name": "The Cosmopolitan of Las Vegas",
-            "location": {"lat": "36.1097596", "lng": "-115.1760656"},
-            "diamonds": "4"
+            "location": {"lat": 36.1097596, "lng": -115.1760656},
+            "diamonds": 4
         },
         {   "name": "New York-New York Hotel and Casino",
-            "location": {"lat": "36.1023758", "lng": "-115.1767446"},
-            "diamonds": "3"
+            "location": {"lat": 36.1023758, "lng": -115.1767446},
+            "diamonds": 3
         },
         {   "name": "Luxor Hotel and Casino",
-            "location": {"lat": "36.0955143", "lng": "-115.1782559"},
-            "diamonds": "3"
+            "location": {"lat": 36.0955143, "lng": -115.1782559},
+            "diamonds": 3
         },
         {   "name": "Hilton Grand Vacations on the Boulevard",
-            "location": {"lat": "36.1400756", "lng": "-115.1633779"},
-            "diamonds": "3"
+            "location": {"lat": 36.1400756, "lng": -115.1633779},
+            "diamonds": 3
         },
         {   "name": "Excalibur Hotel and Casino",
-            "location": {"lat": "36.0989865", "lng": "-115.1776611"},
-            "diamonds": "2"
+            "location": {"lat": 36.0989865, "lng": -115.1776611},
+            "diamonds": 2
         },
         {   "name": "Flamingo Las Vegas",
-            "location": {"lat": "36.1161222", "lng": "-115.1746787"},
-            "diamonds": "2"
+            "location": {"lat": 36.1161222, "lng": -115.1746787},
+            "diamonds": 2
         }
     ]
 }
