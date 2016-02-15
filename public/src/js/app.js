@@ -5,18 +5,24 @@
 /* FIREBASE hotels.json
 ----------------------------------*/
 
-// Get our model data from Firebase server
-var firebaseRef = new Firebase('https://crackling-heat-3113.firebaseio.com/hotels');
 
-// Read the data only once
-/* https://www.firebase.com/docs/web/guide/retrieving-data.html#section-reading-once */
-/* https://www.firebase.com/docs/web/api/query/once.html */
-firebaseRef.once('value', function(dataSnapshot) {
-    // do some stuff once
-    console.log("initial data loaded!", Object.keys(dataSnapshot.val()));
+function getHotels() {
+    // Get our model data from Firebase server
+    var hotelsRef = new Firebase('https://crackling-heat-3113.firebaseio.com/hotels');
 
-}, function (err) {
-    // code to handle read error
-    console.log('ERROR: Could not read data from Firebase');
-});
+    // Read the data only once
+    /* https://www.firebase.com/docs/web/guide/retrieving-data.html#section-reading-once */
+    /* https://www.firebase.com/docs/web/api/query/once.html */
+    hotelsRef.once('value', function(dataSnapshot) {
+        // do some stuff once
+        console.log("initial data loaded!", Object.keys(dataSnapshot.val()));
+        console.log('--- FIREBASE dataSnapshot---');
+        console.log(dataSnapshot.val());
 
+    }, function (errorObject) {
+        // code to handle read error
+        console.log("The read failed: " + errorObject.code);
+    });
+
+
+} // getHotels
