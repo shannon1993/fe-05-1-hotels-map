@@ -1,0 +1,153 @@
+/* FONT HEADING
+----------------------------------*/
+@font-face {
+    font-family: 'AyitaProSemiBold';
+    src: url('../fonts/ayita.eot');
+    src: url('../fonts/ayita.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/ayita.woff2') format('woff2'),
+         url('../fonts/ayitawoff') format('woff'),
+         url('../fonts/ayita.ttf') format('truetype'),
+         url('../fonts/ayita.svg#wf') format('svg');
+}
+
+/* FONT GLYPHS
+----------------------------------*/
+@font-face{
+    font-family:'rs_aaa';
+    src: url('../fonts/rs_aaa.eot');
+    src: url('../fonts/rs_aaa.woff') format('woff'),
+         url('../fonts/rs_aaa.svg#rs') format('svg'),
+         url('../fonts/rs_aaa.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* MAIN STYLING
+----------------------------------*/
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    color: #fc3;
+    background-color: #303030;
+    font-family: Corbel, 'Trebuchet MS', 'Segoe UI', Tahoma, Arial, Helvetica, sans-serif;
+}
+
+header {
+    width: 100%;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'AyitaProSemiBold';
+}
+
+h1 {
+    text-align: center;
+}
+
+h3 {
+    margin-left: 20px;
+}
+
+nav {
+    height: 50px;
+    color:#07CAF7;
+    background-color:#2A491C;
+    padding-left: 20px;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+}
+
+
+aside {
+    flex-basis: 300px;
+    min-width: 300px;
+    background-color: #00137F;
+    margin: 20px 0 0 0;
+}
+
+
+#map {
+    flex-grow: 1;
+    flex-basis: 300px;
+    min-width: 300px;
+    min-height: 500px;
+    margin: 20px 20px 0 20px;
+    padding: 0;
+}
+
+/* css loading animation for google map */
+#spinnerContainer {
+    font-family: 'AyitaProSemiBold';
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8em;
+}
+
+#spinner {
+    font-size: 30px;
+    height: 2em;
+    width: 2em;
+    position: relative;
+    margin: 10px auto 10px auto;
+    -webkit-animation: rotation 0.7s infinite linear;
+    -moz-animation: rotation 0.7s infinite linear;
+    animation: rotation 0.7s infinite linear;
+    border: 0.5em solid rgba(0,0,0,0.2);
+    border-top-color: rgba(0,0,0,0.8);
+    border-radius: 100%;
+}
+
+/* credit: http://www.designcouch.com/home/why/2013/05/23/dead-simple-pure-css-loading-spinner */
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
+}
+
+@-moz-keyframes rotation {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(359deg);
+  }
+}
+
+@-o-keyframes rotation {
+  from {
+    -o-transform: rotate(0deg);
+  }
+  to {
+    -o-transform: rotate(359deg);
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
