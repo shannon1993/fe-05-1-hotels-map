@@ -24,12 +24,14 @@ var initApp = function() {
  * Hotel
  * @name app.Hotel
  * @class Hotel
- * @memberOf app
+ * @memberof app
  */
 app.Hotel = function() {
     'use strict';
 
     var self = this;
+
+    self.hotels = ko.observableArray();
 
     /**
      * @typedef Hotels
@@ -46,26 +48,38 @@ app.Hotel = function() {
      *
      * @function
      * @name app.Hotel.init
-     * @memberOf app.Hotel
+     * @memberof app.Hotel
      * @see {@link https://www.firebase.com/docs/web/guide/retrieving-data.html#section-reading-once}
      * @see {@link https://www.firebase.com/docs/web/api/query/once.html}
      * @returns {Hotels} - Hotel data in json notation
      */
     self.init = function() {
         var hotelsRef, hotels;
+        var i = 0;
+        var hotel = [];
+        var length = 0;
 
         hotelsRef = new Firebase('https://crackling-heat-3113.firebaseio.com/hotels');
 
         // Read the data only once
         hotelsRef.once('value', function(dataSnapshot) {
 
-        hotels = dataSnapshot.val();
+            hotels = dataSnapshot.val();
 
-        // Store all the hotel data in app.Hotel.hotels
-        self.hotels = hotels;
+            // Store all the hotel data in app.Hotel.hotels
+            length = hotels.length;
+            for (i; i < length; i++) {
+                hotel = hotels[i];
 
-        // Initialize the map with the hotels
-        app.vm.initMap();
+                // Save each hotel into a Knockout Observable Array
+                self.hotels.push(hotel);
+            }
+
+            // Initialize the map with the hotels
+            app.vm.init();
+
+            // Now activate Knockout bindings on the ViewModel
+            ko.applyBindings(app.vm);
 
         }, function (errorObject) {
             // TODO: display error to user
@@ -81,7 +95,7 @@ app.Hotel = function() {
  * Place
  * @name app.Place
  * @class Place
- * @memberOf app
+ * @memberof app
  */
 app.Place = function(data) {
     this.name = data.name;
@@ -96,60 +110,27 @@ app.Place = function(data) {
  * ViewModel
  * @name app.ViewModel
  * @class ViewModel
- * @memberOf app
+ * @memberof app
  */
 app.ViewModel = function() {
     'use strict';
 
     var self = this;
 
-    self.mapOptions = {
-        disableDefaultUI: true,
-        center: {lat: 36.1049534, lng: -115.1724043},
-        zoom: 14
-        // 1: World
-        // 5: Landmass/continent
-        // 10: City
-        // 15: Streets
-        // 20: Buildings
-    }; // mapOptions
+    self.hotelList = ko.observableArray();
 
-    self.mapDiv = document.getElementById('map');
+    self.getHotels = ko.computed(function() {
+        return app.model.hotels();
+    });
 
-    self.map = new google.maps.Map(self.mapDiv, self.mapOptions);
+    self.getHotelsLength = ko.computed(function() {
+        return app.model.hotels().length;
+    });
 
-    //self.markers = ko.observableArray();
-
-    self.getHotels = function() {
-        return app.hm.hotels;
-    };
-
-    /**
-     * Displays a Google Map
-     * @function
-     * @name app.MapView.init
-     * @memberOf app.MapView
-     * @see {@link https://developers.google.com/maps/documentation/javascript/reference}
-     */
-    self.initMap = function() {
-        var i = 0;
-        var marker = {};
-        var hotel = [];
-        var place = {};
-        var length = app.model.hotels.length;
-
-        for (i; i < length; i++) {
-            hotel = app.model.hotels[i];
-
-            marker = new google.maps.Marker({
-                position: hotel.location,
-                map: self.map,
-                title: hotel.name
-            }); // marker
-        }
-
-    }; // initMap
-
+    self.init = function() {
+        self.hotelList = self.getHotels();
+        app.mv.initMap();
+    }; // init
 }; // ViewModel
 
 
@@ -157,7 +138,7 @@ app.ViewModel = function() {
  * HotelView
  * @name app.HotelView
  * @class HotelView
- * @memberOf app
+ * @memberof app
  */
 app.HotelView = function() {
     'use strict';
@@ -171,12 +152,48 @@ app.HotelView = function() {
  * MapView
  * @name app.MapView
  * @class MapView
- * @memberOf app
+ * @memberof app
  */
 app.MapView = function() {
     'use strict';
 
     var self = this;
 
+    /**
+     * Displays a Google Map
+     * @function
+     * @name app.MapView.init
+     * @memberof app.MapView
+     * @see {@link https://developers.google.com/maps/documentation/javascript/reference}
+     */
+    self.initMap = function() {
+        var c = 0;
+        var marker = {};
+        var hotel = [];
+        var place = {};
+        var allHotels = app.vm.getHotels();
+        var length = app.vm.getHotelsLength();
+
+        self.mapOptions = {
+            disableDefaultUI: true,
+            center: {lat: 36.1049534, lng: -115.1724043},
+            zoom: 15 // 1: World, 5: Landmass/continent, 10: City, 15: Streets, 20: Buildings
+        }; // mapOptions
+
+        self.mapDiv = document.getElementById('map');
+
+        // Create the map
+        self.map = new google.maps.Map(self.mapDiv, self.mapOptions);
+
+        for (c; c < length; c++) {
+            hotel = allHotels[c];
+
+            marker = new google.maps.Marker({
+                position: hotel.location,
+                map: self.map,
+                title: hotel.name
+            }); // marker
+        }
+    }; // initMap
 
 }; // MapView
