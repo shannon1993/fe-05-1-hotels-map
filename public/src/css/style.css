@@ -10,8 +10,17 @@
          url('../fonts/ayita.svg#wf') format('svg');
 }
 
-/* FONT GLYPHS
+/* FONT ICONS
 ----------------------------------*/
+@font-face {
+    font-family: 'map';
+    src: url('../fonts/map.eot?71245200');
+    src: url('../fonts/map.eot?71245200#iefix') format('embedded-opentype'),
+         url('../fonts/map.woff?71245200') format('woff'),
+         url('../fonts/map.ttf?71245200') format('truetype'),
+         url('../fonts/map.svg?71245200#map') format('svg');
+}
+
 @font-face{
     font-family:'rs_aaa';
     src: url('../fonts/rs_aaa.eot');
@@ -21,6 +30,52 @@
     font-weight: normal;
     font-style: normal;
 }
+
+.icons {
+    font-family: "map";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: .2em;
+    text-align: center;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1em;
+    margin-left: .2em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-menu:before {
+    content: '\e800';
+}
+
+.icon-info:before {
+    content: '\e801';
+    color: #fff;
+    margin-lefT: 20px;
+    cursor: pointer;
+}
+
+.icon-down:before {
+    content: '\e802';
+}
+
+.icon-right:before {
+    content: '\e804';
+}
+
+.icon-search:before {
+    content: '\e808';
+}
+
+.icon-close:before {
+    content: '\e80f';
+}
+
 
 /* MAIN STYLING
 ----------------------------------*/
@@ -36,6 +91,7 @@ body {
     color: #fc3;
     background-color: #303030;
     font-family: Corbel, 'Trebuchet MS', 'Segoe UI', Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 16px;
 }
 
 header {
@@ -46,20 +102,39 @@ h1,
 h2,
 h3 {
     font-family: 'AyitaProSemiBold';
+    margin: 0;
 }
 
 h1 {
     text-align: center;
+    margin: 12px;
 }
+
+h2 {
+    padding-left: 28px;
+    font-size: 26px;
+    line-height: 50px;
+}
+
+/*h3:first-child {
+    margin-top: 20px;
+    border: none;
+}*/
 
 h3 {
-    margin-left: 20px;
+    padding: 4px 0 4px 20px;
+    background-color:#00137F;
+    /*border-top: 1px solid #303030;*/
+    border-bottom: 2px solid #303030;
 }
 
-nav {
-    height: 50px;
+nav .icon-menu:hover {
     color:#07CAF7;
-    background-color:#2A491C;
+    cursor: pointer;
+}
+
+nav .icon-menu {
+    margin-top: 5px;
     padding-left: 20px;
 }
 
@@ -78,10 +153,71 @@ main {
 aside {
     flex-basis: 300px;
     min-width: 300px;
-    background-color: #00137F;
+    background-color: #3781cd;
     margin: 20px 0 0 0;
+    position: relative;
 }
 
+
+aside input {
+    background-color:#ccc;
+    margin: 4px 0 4px 40px;
+}
+
+
+aside ul {
+    /*padding: 0 0 0 20px;*/
+    margin: 0;
+    padding: 0;
+}
+
+aside li {
+    list-style-type: none;
+    padding: 4px 0 4px 20px;
+    color: #006;
+    font-weight: bold;
+    border-bottom: 1px solid #303030;
+}
+
+aside li:hover {
+    background-color: #ccc;
+    color: #000;
+    cursor: pointer;
+    border: 1px solid #000;
+}
+
+aside .icon-close:hover {
+    color:#900;
+    cursor: pointer;
+}
+
+.top {
+    height: 50px;
+    color:#204f26;
+    background-color: #693;
+}
+
+/*.top .icons {
+    color:#204f26;
+}*/
+
+.dark {
+    background-color:#00137F;
+}
+
+.big {
+    font-size: 36px;
+}
+
+.right {
+    float: right;
+}
+
+#menuClose {
+    position: absolute;
+    right: 2px;
+    top: 7px;
+}
 
 #map {
     flex-grow: 1;

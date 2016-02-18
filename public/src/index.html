@@ -11,15 +11,16 @@
 <body>
   <header>
     <h1>Las Vegas Diamond Hotels</h1>
-    <nav>hamburger</nav>
+    <nav class="top"><i class="icons icon-menu big"></i></nav>
   </header>
 
   <main>
     <aside>
-      <h3>Filter By:</h3>
-      <h3>Hotel Name</h3>
-      <h3>Diamond Rating</h3>
-      <h3>Hotel List</h3>
+      <h2 class="top">Filter By:</h3><i id="menuClose" class="icons icon-close big right"></i>
+      <h3><i class="icons icon-down"></i>Hotel Name</h3>
+      <input type="text" value="filter by keywords"><i class="icons icon-search"></i>
+      <h3><i class="icons icon-right"></i>Diamond Rating<i class="icons icon-info"></i></h3>
+      <h3><i class="icons icon-down"></i>Hotel List</h3>
       <ul data-bind="foreach: hotelList">
         <li data-bind="text: name"></li>
       </ul>
