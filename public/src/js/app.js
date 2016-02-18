@@ -117,6 +117,9 @@ app.ViewModel = function() {
 
     var self = this;
 
+    self.slide = document.getElementById('slide');
+    self.animateIn = 'animated slideInLeft no-overlay';
+    self.animateOut = 'animated fadeOutLeft overlay';
     self.hotelList = ko.observableArray();
 
     self.getHotels = ko.computed(function() {
@@ -131,6 +134,16 @@ app.ViewModel = function() {
         self.hotelList = self.getHotels();
         app.mv.initMap();
     }; // init
+
+    self.slideInLeft = function() {
+        slide.className = self.animateIn;
+
+    };
+
+    self.slideOutLeft = function() {
+        slide.className = self.animateOut;
+    };
+
 }; // ViewModel
 
 
@@ -159,6 +172,11 @@ app.MapView = function() {
 
     var self = this;
 
+    // Source: https://sites.google.com/site/gmapsdevelopment/
+    self.markerUrl = 'http://maps.google.com/mapfiles/ms/icons/';
+    self.markerColors = ['0', '1', 'blue', 'green', 'yellow', 'red'];
+    self.infoWindow = null;
+
     /**
      * Displays a Google Map
      * @function
@@ -167,16 +185,12 @@ app.MapView = function() {
      * @see {@link https://developers.google.com/maps/documentation/javascript/reference}
      */
     self.initMap = function() {
-        var c = 0;
-        var marker = {};
-        var hotel = [];
-        var place = {};
-        var allHotels = app.vm.getHotels();
-        var length = app.vm.getHotelsLength();
+        self.currentMapCenter = null;
+        self.originalMapCenter = {lat: 36.1049534, lng: -115.1724043};
 
         self.mapOptions = {
             disableDefaultUI: true,
-            center: {lat: 36.1049534, lng: -115.1724043},
+            center: self.originalMapCenter,
             zoom: 15 // 1: World, 5: Landmass/continent, 10: City, 15: Streets, 20: Buildings
         }; // mapOptions
 
@@ -185,15 +199,72 @@ app.MapView = function() {
         // Create the map
         self.map = new google.maps.Map(self.mapDiv, self.mapOptions);
 
-        for (c; c < length; c++) {
-            hotel = allHotels[c];
+        // Create the markers
+        self.initMarkers();
 
-            marker = new google.maps.Marker({
-                position: hotel.location,
-                map: self.map,
-                title: hotel.name
-            }); // marker
-        }
     }; // initMap
+
+    self.initMarkers = function() {
+        var b = 0;
+        var c = '';
+        var marker = {};
+        var hotel = [];
+        var place = {};
+        var allHotels = app.vm.getHotels();
+        var length = app.vm.getHotelsLength();
+
+        for (b; b < length; b++) {
+            hotel = allHotels[b];
+
+            // Marker color corresponds to diamond rating
+            c = self.markerUrl + self.markerColors[hotel.diamonds];
+
+            // Add hotel markers to the map
+            marker = new google.maps.Marker({
+                map: self.map,
+                position: hotel.location,
+                title: hotel.name,
+                animation: null,
+                icon:  c + '.png'
+            }); // marker
+
+            // Create an info window when a marker is clicked
+            self.createInfoWin(hotel.name,
+                               hotel.location.lat,
+                               hotel.location.lng,
+                               marker,
+                               c);
+        } // for
+
+    }; // initMarkers
+
+    self.createInfoWin = function(name, lat, lng, marker, color) {
+        if (self.infoWindow === null) {
+            self.infoWindow = new google.maps.InfoWindow({
+             content: name
+           });
+        } // if
+
+        // Open the infoWindow when a marker is clicked
+        google.maps.event.addListener(marker, 'click', function() {
+            self.infoWindow.open(self.map, marker);
+
+            // Check if the marker is animated
+            if (marker.getAnimation() !== null) {
+                marker.setAnimation(null);
+            } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+
+                // Display the dot version of the marker
+                marker.icon = color + '-dot.png';
+            }
+
+            // Animate the marker for 2.1 seconds
+            setTimeout(function() {
+                marker.setAnimation(null);
+            }, 2100);
+        });
+
+    };
 
 }; // MapView
