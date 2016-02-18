@@ -7,16 +7,17 @@
   <title>Las Vegas Diamond Hotels</title>
   <link href="css/normalize.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
+  <link href="css/animate.min.css" rel="stylesheet">
 </head>
 <body>
   <header>
     <h1>Las Vegas Diamond Hotels</h1>
-    <nav class="top"><i class="icons icon-menu big"></i></nav>
+    <nav class="top"><i data-bind="click: slideInLeft" class="icons icon-menu big"></i></nav>
   </header>
 
   <main>
-    <aside>
-      <h2 class="top">Filter By:</h3><i id="menuClose" class="icons icon-close big right"></i>
+    <aside id="slide" class="no-overlay">
+      <h2>Filter By:</h3><i data-bind="click: slideOutLeft" id="menuClose" class="icons icon-close big right"></i>
       <h3><i class="icons icon-down"></i>Hotel Name</h3>
       <input type="text" value="filter by keywords"><i class="icons icon-search"></i>
       <h3><i class="icons icon-right"></i>Diamond Rating<i class="icons icon-info"></i></h3>

@@ -77,7 +77,7 @@
 }
 
 
-/* MAIN STYLING
+/* MAIN STYLES
 ----------------------------------*/
 html,
 body {
@@ -111,15 +111,12 @@ h1 {
 }
 
 h2 {
-    padding-left: 28px;
+    padding: 0 0 0 28px;
     font-size: 26px;
     line-height: 50px;
+    background-color:#00137F;
+    border-bottom: 20px solid #3781cd;
 }
-
-/*h3:first-child {
-    margin-top: 20px;
-    border: none;
-}*/
 
 h3 {
     padding: 4px 0 4px 20px;
@@ -147,6 +144,7 @@ main {
     align-items: stretch;
     width: 100%;
     height: 100%;
+    position: relative;
 }
 
 
@@ -155,9 +153,25 @@ aside {
     min-width: 300px;
     background-color: #3781cd;
     margin: 20px 0 0 0;
-    position: relative;
+    top: -70px; /* top align with menu bar */
+    z-index: 99;
 }
 
+.no-overlay {
+    /* Places list view next to map */
+    position: relative;
+
+    /* Stretches height to bottom of page, minus top value */
+    height: calc(100% - 70px);
+}
+
+.overlay {
+    /* Overlays list view over the map */
+    position: absolute;
+
+    /* Shrinks height to fit container */
+    height: auto;
+}
 
 aside input {
     background-color:#ccc;
@@ -197,25 +211,16 @@ aside .icon-close:hover {
     background-color: #693;
 }
 
-/*.top .icons {
-    color:#204f26;
-}*/
-
-.dark {
-    background-color:#00137F;
-}
-
 .big {
     font-size: 36px;
 }
 
-.right {
-    float: right;
-}
 
 #menuClose {
+    margin: 0;
+    padding: 0;
     position: absolute;
-    right: 2px;
+    right: 7px;
     top: 7px;
 }
 
@@ -227,6 +232,25 @@ aside .icon-close:hover {
     margin: 20px 20px 0 20px;
     padding: 0;
 }
+
+
+/* MEDIA QUERIES
+----------------------------------*/
+@media only screen and (max-width: 800px) {
+  aside {
+    background-color: rgba(55, 129, 205, 0.8);
+  }
+
+  /* Screen is smaller, so always overlay */
+  .no-overlay {
+    position: absolute;
+    height: auto;
+  }
+}
+
+
+/* SPINNER ANIMATION
+----------------------------------*/
 
 /* css loading animation for google map */
 #spinnerContainer {
@@ -252,6 +276,7 @@ aside .icon-close:hover {
 }
 
 /* credit: http://www.designcouch.com/home/why/2013/05/23/dead-simple-pure-css-loading-spinner */
+
 @-webkit-keyframes rotation {
   from {
     -webkit-transform: rotate(0deg);
