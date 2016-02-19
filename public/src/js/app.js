@@ -103,18 +103,11 @@ app.ViewModel = function() {
 
     var self = this;
 
-    self.slide = document.getElementById('slide');
-    self.animateIn = 'animated slideInLeft no-overlay';
-    self.animateOut = 'animated fadeOutLeft overlay';
     self.hotelList = ko.observableArray();
 
     self.getHotels = ko.computed(function() {
         return app.model.hotels();
     });
-
-    self.setHotels = function(newhotels) {
-        app.model.hotels(newHotels);
-    };
 
     self.getHotelsLength = ko.computed(function() {
         return app.model.hotels().length;
@@ -125,14 +118,14 @@ app.ViewModel = function() {
         app.mv.initMap();
     };
 
-    self.slideInLeft = function() {
-        slide.className = self.animateIn;
+    self.slideIn = function() {
+        app.hv.slideInLeft();
         google.maps.event.trigger(app.mv.map,'resize');
 
     };
 
-    self.slideOutLeft = function() {
-        slide.className = self.animateOut;
+    self.slideOut = function() {
+        app.hv.slideOutLeft();
         google.maps.event.trigger(app.mv.map,'resize');
     };
 
@@ -156,6 +149,18 @@ app.HotelView = function() {
     'use strict';
 
     var self = this;
+
+    self.slide = document.getElementById('slide');
+    self.animateIn = 'animated slideInLeft no-overlay';
+    self.animateOut = 'animated fadeOutLeft overlay';
+
+    self.slideInLeft = function() {
+        slide.className = self.animateIn;
+    };
+
+    self.slideOutLeft = function() {
+        slide.className = self.animateOut;
+    };
 
 }; // HotelView
 
@@ -216,8 +221,6 @@ app.MapView = function() {
             self.currentMapCenter = self.map.getCenter();
             self.map.setCenter(self.currentMapCenter);
         });
-
-
     }; // initMap
 
     self.createMarkers = function() {
@@ -248,7 +251,6 @@ app.MapView = function() {
                             hotel.marker,
                             hotel.color);
         } // for
-
     }; // createMarkers
 
     self.setInfoWin = function(name, location, marker, color) {
@@ -260,7 +262,6 @@ app.MapView = function() {
                                 marker,
                                 color);
         });
-
     }; // setInfoWin
 
     self.activateMarker = function(name, location, marker, color) {
