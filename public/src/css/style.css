@@ -101,7 +101,7 @@ header {
 h1,
 h2,
 h3 {
-    font-family: 'AyitaProSemiBold';
+    font-family: 'AyitaProSemiBold', sans-serif;
     margin: 0;
 }
 
@@ -121,7 +121,6 @@ h2 {
 h3 {
     padding: 4px 0 4px 20px;
     background-color:#00137F;
-    /*border-top: 1px solid #303030;*/
     border-bottom: 2px solid #303030;
 }
 
@@ -149,9 +148,8 @@ main {
 
 
 aside {
-    flex-basis: 300px;
-    min-width: 300px;
-    background-color: #3781cd;
+    flex-basis: 320px;
+    min-width: 320px;
     margin: 20px 0 0 0;
     top: -70px; /* top align with menu bar */
     z-index: 99;
@@ -180,7 +178,6 @@ aside input {
 
 
 aside ul {
-    /*padding: 0 0 0 20px;*/
     margin: 0;
     padding: 0;
 }
@@ -191,6 +188,7 @@ aside li {
     color: #006;
     font-weight: bold;
     border-bottom: 1px solid #303030;
+    background-color: #3781cd;
 }
 
 aside li:hover {
@@ -226,9 +224,9 @@ aside .icon-close:hover {
 
 #map {
     flex-grow: 1;
-    flex-basis: 300px;
-    min-width: 300px;
-    min-height: 500px;
+    flex-basis: 320px;
+    min-width: 320px;
+    min-height: 480px;
     margin: 20px 20px 0 20px;
     padding: 0;
 }
@@ -237,7 +235,7 @@ aside .icon-close:hover {
 /* MEDIA QUERIES
 ----------------------------------*/
 @media only screen and (max-width: 800px) {
-  aside {
+  aside li {
     background-color: rgba(55, 129, 205, 0.8);
   }
 
@@ -254,7 +252,7 @@ aside .icon-close:hover {
 
 /* css loading animation for google map */
 #spinnerContainer {
-    font-family: 'AyitaProSemiBold';
+    font-family: 'AyitaProSemiBold', sans-serif;
     text-align: center;
     font-weight: 700;
     text-transform: uppercase;
