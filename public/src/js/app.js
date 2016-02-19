@@ -178,7 +178,11 @@ app.MapView = function() {
     self.mapOptions = {
         disableDefaultUI: true,
         center: self.originalMapCenter,
-        zoom: 15
+        zoom: 15,
+        zoomControl: true,
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_TOP
+        }
     };
 
     // Source: https://sites.google.com/site/gmapsdevelopment/
