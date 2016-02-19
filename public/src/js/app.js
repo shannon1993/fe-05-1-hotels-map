@@ -92,21 +92,6 @@ app.Hotel = function() {
 
 
 /**
- * Place
- * @name app.Place
- * @class Place
- * @memberof app
- */
-app.Place = function(data) {
-    this.name = data.name;
-    this.location = data.location;
-    this.diamonds = data.diamonds;
-    this.markerColor = 'red';
-    this.markerOptions = {};
-}; // Place
-
-
-/**
  * ViewModel
  * @name app.ViewModel
  * @class ViewModel
@@ -174,12 +159,19 @@ app.MapView = function() {
 
     var self = this;
 
+    self.infoWindow = null;
+    self.currentMapCenter = null;
+    self.originalMapCenter = {lat: 36.1049534, lng: -115.1724043};
+    self.mapDiv = document.getElementById('map');
+    self.mapOptions = {
+        disableDefaultUI: true,
+        center: self.originalMapCenter,
+        zoom: 15
+    };
+
     // Source: https://sites.google.com/site/gmapsdevelopment/
     self.markerUrl = 'http://maps.google.com/mapfiles/ms/icons/';
     self.markerColors = ['0', '1', 'blue', 'green', 'yellow', 'red'];
-    self.infoWindow = null;
-    self.currMarker = null;
-    self.infoWindow = null;
 
     /**
      * Displays a Google Map
@@ -189,17 +181,6 @@ app.MapView = function() {
      * @see {@link https://developers.google.com/maps/documentation/javascript/reference}
      */
     self.initMap = function() {
-        self.currentMapCenter = null;
-        self.originalMapCenter = {lat: 36.1049534, lng: -115.1724043};
-
-        self.mapOptions = {
-            disableDefaultUI: true,
-            center: self.originalMapCenter,
-            zoom: 15 // 1: World, 5: Landmass/continent, 10: City, 15: Streets, 20: Buildings
-        }; // mapOptions
-
-        self.mapDiv = document.getElementById('map');
-
         // Create the map
         self.map = new google.maps.Map(self.mapDiv, self.mapOptions);
 
@@ -207,13 +188,14 @@ app.MapView = function() {
         self.infoWindow = new google.maps.InfoWindow();
 
         // Create the markers
-        self.initMarkers();
+        self.createMarkers();
 
         // Trigger map resize if the window changes size
         google.maps.event.addDomListener(window, "resize", function() {
             google.maps.event.trigger(self.map, "resize");
         });
 
+        // Update center of the map on resize
         google.maps.event.addListener(self.map, 'resize', function () {
             self.currentMapCenter = self.map.getCenter();
             self.map.setCenter(self.currentMapCenter);
@@ -222,7 +204,7 @@ app.MapView = function() {
 
     }; // initMap
 
-    self.initMarkers = function() {
+    self.createMarkers = function() {
         var b = 0;
         var c = '';
         var marker = {};
@@ -246,50 +228,33 @@ app.MapView = function() {
                 icon:  c + '.png'
             }); // marker
 
-            // Create an info window when a marker is clicked
-            self.createInfoWin(hotel.name,
-                               hotel.location.lat,
-                               hotel.location.lng,
-                               marker,
-                               c);
+            // Open an info window when a marker is clicked
+            self.setInfoWin(hotel.name,
+                            hotel.location,
+                            marker,
+                            c);
         } // for
 
-        google.maps.event.addListener(self.infoWindow, 'domready', function(){
-            //TODO: load yelp info here
-            console.log('domready');
-            //code to dynamically load new content to infowindow
-            //for example:
-            //    var existing_content = referenceToInfoWindow.getContent();
-            //    var new_content = "...";
-            //    referenceToInfoWindow.setContent(existing_content + new_content);
-        });
+    }; // createMarkers
 
+    self.setInfoWin = function(name, location, marker, color) {
 
-        // window.mapBounds.extend(new google.maps.LatLng(hotel.location.lat, hotel.location.lng));
-        // self.map.fitBounds(window.mapBounds);
-        // self.map.setCenter(window.mapBounds.getCenter());
-
-        // window.mapBounds = new google.maps.LatLngBounds();
-
-        // window.addEventListener('resize', function(e) {
-        //   self.map.fitBounds(mapBounds);
-        // });
-    }; // initMarkers
-
-    self.createInfoWin = function(name, lat, lng, marker, color) {
         // Open the infoWindow when a marker is clicked
         google.maps.event.addListener(marker, 'click', function() {
+
+            // Re-center the map on the marker that was clicked
+            self.map.setCenter(location);
 
             // Set the content
             self.infoWindow.setContent(name);
 
             self.infoWindow.open(self.map, marker);
 
-            // Animated and change display of marker
-                marker.setAnimation(google.maps.Animation.BOUNCE);
+            // Animate and change display of the marker
+            marker.setAnimation(google.maps.Animation.BOUNCE);
 
             // Display the dot version of the marker
-                marker.icon = color + '-dot.png';
+            marker.icon = color + '-dot.png';
 
             // Animate the marker for 2.1 seconds
             setTimeout(function() {
@@ -297,6 +262,7 @@ app.MapView = function() {
                 marker.icon = color + '.png';
             }, 2100);
         });
-    }; // createInfoWin
+
+    }; // setInfoWin
 
 }; // MapView
