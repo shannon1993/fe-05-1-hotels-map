@@ -189,7 +189,7 @@ app.MapView = function() {
 
     // Source: https://sites.google.com/site/gmapsdevelopment/
     self.markerUrl = 'http://maps.google.com/mapfiles/ms/icons/';
-    self.markerColors = ['0', '1', 'blue', 'green', 'yellow', 'red'];
+    self.markerColors = ['pink', 'purple', 'blue', 'green', 'yellow', 'red'];
 
     /**
      * Displays a Google Map
@@ -221,14 +221,13 @@ app.MapView = function() {
     }; // initMap
 
     self.createMarkers = function() {
-        var b = 0;
-        var c = '';
-        var hotel = [];
+        var c = 0;
+        var hotel = {};
         var allHotels = app.vm.getHotels();
         var length = app.vm.getHotelsLength();
 
-        for (b; b < length; b++) {
-            hotel = allHotels[b];
+        for (c; c < length; c++) {
+            hotel = allHotels[c];
 
             // Marker color corresponds to diamond rating
             hotel.color = self.markerColors[hotel.diamonds];
