@@ -137,11 +137,13 @@ app.ViewModel = function() {
 
     self.slideInLeft = function() {
         slide.className = self.animateIn;
+        google.maps.event.trigger(app.mv.map,'resize');
 
     };
 
     self.slideOutLeft = function() {
         slide.className = self.animateOut;
+        google.maps.event.trigger(app.mv.map,'resize');
     };
 
 }; // ViewModel
@@ -176,6 +178,8 @@ app.MapView = function() {
     self.markerUrl = 'http://maps.google.com/mapfiles/ms/icons/';
     self.markerColors = ['0', '1', 'blue', 'green', 'yellow', 'red'];
     self.infoWindow = null;
+    self.currMarker = null;
+    self.infoWindow = null;
 
     /**
      * Displays a Google Map
@@ -199,8 +203,22 @@ app.MapView = function() {
         // Create the map
         self.map = new google.maps.Map(self.mapDiv, self.mapOptions);
 
+        // Create the info window that will be re-used by each marker
+        self.infoWindow = new google.maps.InfoWindow();
+
         // Create the markers
         self.initMarkers();
+
+        // Trigger map resize if the window changes size
+        google.maps.event.addDomListener(window, "resize", function() {
+            google.maps.event.trigger(self.map, "resize");
+        });
+
+        google.maps.event.addListener(self.map, 'resize', function () {
+            self.currentMapCenter = self.map.getCenter();
+            self.map.setCenter(self.currentMapCenter);
+        });
+
 
     }; // initMap
 
@@ -236,35 +254,49 @@ app.MapView = function() {
                                c);
         } // for
 
+        google.maps.event.addListener(self.infoWindow, 'domready', function(){
+            //TODO: load yelp info here
+            console.log('domready');
+            //code to dynamically load new content to infowindow
+            //for example:
+            //    var existing_content = referenceToInfoWindow.getContent();
+            //    var new_content = "...";
+            //    referenceToInfoWindow.setContent(existing_content + new_content);
+        });
+
+
+        // window.mapBounds.extend(new google.maps.LatLng(hotel.location.lat, hotel.location.lng));
+        // self.map.fitBounds(window.mapBounds);
+        // self.map.setCenter(window.mapBounds.getCenter());
+
+        // window.mapBounds = new google.maps.LatLngBounds();
+
+        // window.addEventListener('resize', function(e) {
+        //   self.map.fitBounds(mapBounds);
+        // });
     }; // initMarkers
 
     self.createInfoWin = function(name, lat, lng, marker, color) {
-        if (self.infoWindow === null) {
-            self.infoWindow = new google.maps.InfoWindow({
-             content: name
-           });
-        } // if
-
         // Open the infoWindow when a marker is clicked
         google.maps.event.addListener(marker, 'click', function() {
+
+            // Set the content
+            self.infoWindow.setContent(name);
+
             self.infoWindow.open(self.map, marker);
 
-            // Check if the marker is animated
-            if (marker.getAnimation() !== null) {
-                marker.setAnimation(null);
-            } else {
+            // Animated and change display of marker
                 marker.setAnimation(google.maps.Animation.BOUNCE);
 
-                // Display the dot version of the marker
+            // Display the dot version of the marker
                 marker.icon = color + '-dot.png';
-            }
 
             // Animate the marker for 2.1 seconds
             setTimeout(function() {
                 marker.setAnimation(null);
+                marker.icon = color + '.png';
             }, 2100);
         });
-
-    };
+    }; // createInfoWin
 
 }; // MapView
