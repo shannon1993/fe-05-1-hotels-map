@@ -121,7 +121,6 @@ app.ViewModel = function() {
     self.slideIn = function() {
         app.hv.slideInLeft();
         google.maps.event.trigger(app.mv.map,'resize');
-
     };
 
     self.slideOut = function() {
@@ -130,11 +129,9 @@ app.ViewModel = function() {
     };
 
     self.gotoHotel = function(hotel) {
-        app.mv.activateMarker(hotel.name,
-                              hotel.location,
-                              hotel.marker,
-                              hotel.color);
+        app.mv.activateMarker(hotel);
     };
+
 
 }; // ViewModel
 
@@ -246,43 +243,38 @@ app.MapView = function() {
             }); // marker
 
             // Open an info window when a marker is clicked
-            self.setInfoWin(hotel.name,
-                            hotel.location,
-                            hotel.marker,
-                            hotel.color);
+            self.setInfoWin(hotel);
         } // for
     }; // createMarkers
 
-    self.setInfoWin = function(name, location, marker, color) {
+    self.setInfoWin = function(hotel) {
 
         // Open the infoWindow when a marker is clicked
-        google.maps.event.addListener(marker, 'click', function() {
-            self.activateMarker(name,
-                                location,
-                                marker,
-                                color);
+        google.maps.event.addListener(hotel.marker, 'click', function() {
+            self.activateMarker(hotel);
         });
+
     }; // setInfoWin
 
-    self.activateMarker = function(name, location, marker, color) {
+    self.activateMarker = function(hotel) {
         // Re-center the map on the marker that was clicked
-        self.map.setCenter(location);
+        self.map.setCenter(hotel.location);
 
         // Set the content
-        self.infoWindow.setContent(name);
+        self.infoWindow.setContent(hotel.name);
 
-        self.infoWindow.open(self.map, marker);
+        self.infoWindow.open(self.map, hotel.marker);
 
         // Animate and change display of the marker
-        marker.setAnimation(google.maps.Animation.BOUNCE);
+        hotel.marker.setAnimation(google.maps.Animation.BOUNCE);
 
         // Display the dot version of the marker
-        marker.icon = self.markerUrl + color + '-dot.png';
+        hotel.marker.icon = self.markerUrl + hotel.color + '-dot.png';
 
         // Animate the marker for 2.1 seconds
         setTimeout(function() {
-            marker.setAnimation(null);
-            marker.icon = self.markerUrl + color + '.png';
+            hotel.marker.setAnimation(null);
+            hotel.marker.icon = self.markerUrl + hotel.color + '.png';
         }, 2100);
     }; // activateMarker
 
