@@ -10,6 +10,7 @@
   <link href="css/animate.min.css" rel="stylesheet">
 </head>
 <body>
+
   <header>
     <h1>Las Vegas Diamond Hotels</h1>
     <nav class="top"><i data-bind="click: slideIn" class="icons icon-menu big"></i></nav>
@@ -19,9 +20,11 @@
     <aside id="slide" class="no-overlay">
       <h2>Filter By:</h3><i data-bind="click: slideOut" id="menuClose" class="icons icon-close big right"></i>
       <h3><i class="icons icon-down"></i>Hotel Name</h3>
-      <ul>
-        <li><input type="text" value="filter by keywords"><i class="icons icon-search"></i></li>
-      </ul>
+      <form>
+        <i class="icons icon-search"></i>
+        <input type="text" placeholder=" enter keywords">
+        <!-- <input type="text" data-bind="value: filterText, valueUpdate: 'keyup'" > -->
+      </form>
       <h3><i class="icons icon-right"></i>Diamond Rating<i class="icons icon-info"></i></h3>
       <h3><i class="icons icon-down"></i>Hotel List</h3>
       <ul data-bind="foreach: hotelList">
@@ -41,5 +44,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpx555oZLZBIBlnLV6dLMY2ORJM6ULQZ0&callback=initApp"></script>
   <script src="js/app.js"></script>
+
 </body>
 </html>

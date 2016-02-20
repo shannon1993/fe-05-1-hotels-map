@@ -70,6 +70,7 @@
 
 .icon-search:before {
     content: '\e808';
+    margin-left: 20px;
 }
 
 .icon-close:before {
@@ -173,7 +174,7 @@ aside {
 
 aside input {
     background-color:#ccc;
-    margin: 4px 0 4px 40px;
+    margin: 4px 0 4px 24px;
 }
 
 
@@ -182,7 +183,8 @@ aside ul {
     padding: 0;
 }
 
-aside li {
+aside li,
+aside form {
     list-style-type: none;
     padding: 4px 0 4px 20px;
     color: #006;
