@@ -17,6 +17,9 @@ var initApp = function() {
 
     // Get the hotel data
     app.model.init();
+
+    // Activate Knockout bindings on the ViewModel
+    ko.applyBindings(app.vm);
 };
 
 
@@ -78,9 +81,6 @@ app.Hotel = function() {
 
             // Initialize the map with the hotels
             app.vm.init();
-
-            // Now activate Knockout bindings on the ViewModel
-            ko.applyBindings(app.vm);
 
         }, function (errorObject) {
             // TODO: display error to user
