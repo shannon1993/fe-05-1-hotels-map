@@ -22,12 +22,11 @@
       <h3><i class="icons icon-down"></i>Hotel Name</h3>
       <form>
         <i class="icons icon-search"></i>
-        <input type="text" placeholder=" enter keywords">
-        <!-- <input type="text" data-bind="value: filterText, valueUpdate: 'keyup'" > -->
+        <input type="text" data-bind="textInput: filterText" placeholder=" enter keywords">
       </form>
       <h3><i class="icons icon-right"></i>Diamond Rating<i class="icons icon-info"></i></h3>
       <h3><i class="icons icon-down"></i>Hotel List</h3>
-      <ul data-bind="foreach: hotelList">
+      <ul data-bind="foreach: filterList">
         <li data-bind="text: name, click: $root.gotoHotel"></li>
       </ul>
     </aside>
@@ -40,10 +39,8 @@
   </main>
 
   <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
-  <!-- script src="https://code.jquery.com/jquery-2.2.0.min.js"></script -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpx555oZLZBIBlnLV6dLMY2ORJM6ULQZ0&callback=initApp"></script>
   <script src="js/app.js"></script>
-
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpx555oZLZBIBlnLV6dLMY2ORJM6ULQZ0&callback=initApp"></script>
 </body>
 </html>

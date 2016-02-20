@@ -54,7 +54,8 @@ app.Hotel = function() {
      * @returns {Hotels} - Hotel data in json notation
      */
     self.init = function() {
-        var hotelsRef, hotels;
+        var hotelsRef;
+        var hotelsJSON;
         var i = 0;
         var hotel = [];
         var length = 0;
@@ -64,12 +65,12 @@ app.Hotel = function() {
         // Read the data only once
         hotelsRef.once('value', function(dataSnapshot) {
 
-            hotels = dataSnapshot.val();
+            hotelsJSON = dataSnapshot.val();
 
             // Store all the hotel data in app.Hotel.hotels
-            length = hotels.length;
+            length = hotelsJSON.length;
             for (i; i < length; i++) {
-                hotel = hotels[i];
+                hotel = hotelsJSON[i];
 
                 // Save each hotel into a Knockout Observable Array
                 self.hotels.push(hotel);
@@ -104,6 +105,8 @@ app.ViewModel = function() {
     var self = this;
 
     self.hotelList = ko.observableArray();
+    self.filterList = ko.observableArray();
+    self.filterText = ko.observable('');
 
     self.getHotels = ko.computed(function() {
         return app.model.hotels();
@@ -114,7 +117,8 @@ app.ViewModel = function() {
     });
 
     self.init = function() {
-        self.hotelList = self.getHotels();
+        self.hotelList(self.getHotels());
+        self.filterList(self.getHotels());
         app.mv.initMap();
     };
 
@@ -132,6 +136,24 @@ app.ViewModel = function() {
         app.mv.activateMarker(hotel);
     };
 
+    self.filterText.subscribe(function (query) {
+        var result = -1;
+        var temp = [];
+
+        self.hotelList().forEach(function(hotel, index) {
+            result = hotel.name.toLowerCase().indexOf(query.toLowerCase());
+            if(result >= 0) {
+                hotel.marker.setVisible(true);
+                temp.push(hotel);
+            } else {
+                hotel.marker.setVisible(false);
+                app.mv.infoWindow.close();
+            }
+        }); // forEach
+
+        self.filterList(temp);
+
+    }); // filterText
 
 }; // ViewModel
 
@@ -209,8 +231,8 @@ app.MapView = function() {
         self.createMarkers();
 
         // Trigger map resize if the window changes size
-        google.maps.event.addDomListener(window, "resize", function() {
-            google.maps.event.trigger(self.map, "resize");
+        google.maps.event.addDomListener(window, 'resize', function() {
+            google.maps.event.trigger(self.map, 'resize');
         });
 
         // Update center of the map on resize
@@ -238,6 +260,7 @@ app.MapView = function() {
                 position: hotel.location,
                 title: hotel.name,
                 animation: null,
+                visible: true,
                 icon:  self.markerUrl + hotel.color + '.png'
             }); // marker
 
@@ -264,7 +287,7 @@ app.MapView = function() {
 
         self.infoWindow.open(self.map, hotel.marker);
 
-        // Animate and change display of the marker
+        // Animate the marker
         hotel.marker.setAnimation(google.maps.Animation.BOUNCE);
 
         // Display the dot version of the marker
