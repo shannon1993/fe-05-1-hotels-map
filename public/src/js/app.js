@@ -133,6 +133,9 @@ app.ViewModel = function() {
     };
 
     self.gotoHotel = function(hotel) {
+        // Re-center the map on the marker that was clicked
+        app.mv.map.setCenter(hotel.location);
+
         app.mv.activateMarker(hotel);
     };
 
@@ -279,9 +282,6 @@ app.MapView = function() {
     }; // setInfoWin
 
     self.activateMarker = function(hotel) {
-        // Re-center the map on the marker that was clicked
-        self.map.setCenter(hotel.location);
-
         // Set the content
         self.infoWindow.setContent(hotel.name);
 
