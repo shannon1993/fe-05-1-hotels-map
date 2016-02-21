@@ -108,8 +108,18 @@ app.ViewModel = function() {
     self.filterList = ko.observableArray();
     self.filterText = ko.observable('');
 
+    self.nameSort = function(left, right) {
+        return left.name == right.name ? 0 : (left.name < right.name ? -1 : 1);
+    };
+
     self.getHotels = ko.computed(function() {
-        return app.model.hotels();
+        // Unwrap the observable to return an array
+        var hotelArray = app.model.hotels();
+
+        // Sort the array by hotel name
+        hotelArray.sort(self.nameSort);
+
+        return hotelArray;
     });
 
     self.getHotelsLength = ko.computed(function() {
@@ -139,12 +149,16 @@ app.ViewModel = function() {
         app.mv.activateMarker(hotel);
     };
 
+    // Subscribe to the filterText observable
+    // This function will be called whenever the user types in text
     self.filterText.subscribe(function (query) {
         var result = -1;
         var temp = [];
 
         self.hotelList().forEach(function(hotel, index) {
+            // Check if the query matches with the hotel name
             result = hotel.name.toLowerCase().indexOf(query.toLowerCase());
+
             if(result >= 0) {
                 hotel.marker.setVisible(true);
                 temp.push(hotel);
@@ -154,8 +168,11 @@ app.ViewModel = function() {
             }
         }); // forEach
 
-        self.filterList(temp);
+        // Sort the array
+        temp.sort(self.nameSort);
 
+        // Save the sorted hotels back to the ko observable array
+        self.filterList(temp);
     }); // filterText
 
 }; // ViewModel
