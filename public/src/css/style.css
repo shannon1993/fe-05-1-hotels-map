@@ -123,6 +123,7 @@ h3 {
     padding: 4px 0 4px 20px;
     background-color:#00137F;
     border-bottom: 2px solid #303030;
+    cursor: pointer;
 }
 
 nav .icon-menu:hover {
@@ -213,6 +214,10 @@ aside .icon-close:hover {
 
 .big {
     font-size: 36px;
+}
+
+.hidden {
+    display: none;
 }
 
 

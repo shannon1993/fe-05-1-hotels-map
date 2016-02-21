@@ -18,6 +18,9 @@ var initApp = function() {
     // Get the hotel data
     app.model.init();
 
+    // Init Hotel View click event listeners
+    app.hv.init();
+
     // Activate Knockout bindings on the ViewModel
     ko.applyBindings(app.vm);
 };
@@ -192,6 +195,7 @@ app.HotelView = function() {
     self.slide = document.getElementById('slide');
     self.animateIn = 'animated slideInLeft no-overlay';
     self.animateOut = 'animated fadeOutLeft overlay';
+    self.h3 = document.getElementsByTagName('h3');
 
     self.slideInLeft = function() {
         slide.className = self.animateIn;
@@ -199,6 +203,36 @@ app.HotelView = function() {
 
     self.slideOutLeft = function() {
         slide.className = self.animateOut;
+    };
+
+    self.toggleDisplay = function(headElem, iconClass) {
+        if (iconClass != 'icons icon-down') {
+            iconClass  = 'icons icon-down';
+
+            // Show the section under the heading
+            headElem.nextElementSibling.style.display = 'block';
+        } else {
+            iconClass = 'icons icon-right';
+
+            // Hide the section under the heading
+            headElem.nextElementSibling.style.display = 'none';
+        }
+
+        return iconClass;
+    };
+
+    self.setIcon = function(e) {
+        e.target.firstChild.className = self.toggleDisplay(e.target, e.target.firstChild.className);
+    };
+
+    self.init = function() {
+        var i = 0;
+        var len = self.h3.length;
+
+        for(i; i < len; i++) {
+            // Add a click event for each h3 heading
+            self.h3[i].addEventListener('click', self.setIcon, false);
+        } // for
     };
 
 }; // HotelView
