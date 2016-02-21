@@ -31,6 +31,15 @@
     font-style: normal;
 }
 
+.diamonds {
+    font-family: "rs_aaa";
+    color: #ed1b2e;
+    letter-spacing: 2px;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: normal;
+}
+
 .icons {
     font-family: "map";
     font-style: normal;
@@ -56,8 +65,9 @@
 .icon-info:before {
     content: '\e801';
     color: #fff;
-    margin-lefT: 20px;
-    cursor: pointer;
+    margin: 3px 0 0 -10px;
+    font-size: 19px;
+    display: block;
 }
 
 .icon-down:before {
@@ -70,7 +80,6 @@
 
 .icon-search:before {
     content: '\e808';
-    margin-left: 20px;
 }
 
 .icon-close:before {
@@ -112,7 +121,7 @@ h1 {
 }
 
 h2 {
-    padding: 0 0 0 28px;
+    padding: 0 0 0 20px;
     font-size: 26px;
     line-height: 50px;
     background-color:#00137F;
@@ -120,7 +129,7 @@ h2 {
 }
 
 h3 {
-    padding: 4px 0 4px 20px;
+    padding: 4px 0 4px 12px;
     background-color:#00137F;
     border-bottom: 2px solid #303030;
     cursor: pointer;
@@ -175,7 +184,7 @@ aside {
 
 aside input {
     background-color:#ccc;
-    margin: 4px 0 4px 24px;
+    margin: 4px 0 4px 0px;
 }
 
 
@@ -220,6 +229,18 @@ aside .icon-close:hover {
     display: none;
 }
 
+.hidden li {
+    height: 19px;
+    line-height: 19px;
+}
+
+.dbox {
+    margin-right: 5px;
+}
+
+#about {
+    font-size: 14px;
+}
 
 #menuClose {
     margin: 0;
