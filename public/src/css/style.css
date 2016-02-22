@@ -33,7 +33,7 @@
 
 .diamonds {
     font-family: "rs_aaa";
-    color: #db0014; /* #ed1b2e */
+    color: #db0014;
     letter-spacing: 2px;
     font-size: 19px;
     font-style: normal;
@@ -246,6 +246,26 @@ aside .icon-close:hover {
 
 .rbox {
     margin-right: 5px;
+}
+
+.red .diamonds {
+    color: #db0014;
+}
+
+.yellow .diamonds {
+    color: #ffdc00;
+}
+
+.green .diamonds {
+    color: #2ecc40;
+}
+
+.blue .diamonds {
+    color: #001f3f;
+}
+
+.purple .diamonds {
+    color: #57007f;
 }
 
 #about {

@@ -36,7 +36,7 @@
             checked = KO saves the checkbox value to the array "ratingsChecked" and removes it if un-checked
           -->
           <!-- ko foreach: ratings -->
-          <li><input data-bind="checkedValue: ratingValue, checked: $root.ratingsChecked, click: $root.filterRatings" class="rbox" type="checkbox"> <i data-bind="text: icon" class="diamonds"></i></li>
+          <li data-bind="attr: { class: color}"><input data-bind="checkedValue: ratingValue, checked: $root.ratingsChecked, click: $root.filterRatings" class="rbox" type="checkbox"> <i data-bind="text: icon" class="diamonds"></i></li>
           <!-- /ko -->
           <li>Source: <a href="http://newsroom.aaa.com/diamond-ratings/" title="AAA Diamond Rated Hotels">AAA</a></li>
         </ul>
