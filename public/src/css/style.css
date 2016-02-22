@@ -256,19 +256,37 @@ aside .icon-close:hover {
 #definitions {
     display: none;
     position: absolute;
-    top:0;
+    top: 50px;
     overflow:auto;
+    background-color: #ccc;
 }
 
 #definitions li:first-child {
     text-align: center;
     font-weight: bold;
     text-transform: uppercase;
+    font-size: 110%;
+    background-color: #969696;
+    padding: 10px;
+}
+
+#definitions li:first-child:hover {
+    color: #fff;
+    background-color: #3781cd;
+    cursor: pointer;
 }
 
 #definitions li {
     font-weight: normal;
     color: #000;
+    border: none;
+    background-color: #ccc;
+    padding: 0 20px;
+}
+
+#definitions li:hover {
+    background-color: #ccc;
+    cursor: default;
 }
 
 #menuClose {
