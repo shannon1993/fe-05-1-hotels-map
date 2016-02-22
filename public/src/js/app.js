@@ -170,6 +170,14 @@ app.ViewModel = function() {
         return true;
     };
 
+    self.open = function() {
+        app.hv.openInfo();
+    };
+
+    self.close = function() {
+        app.hv.closeInfo();
+    };
+
     self.hotelDisplay = ko.computed(function() {
         var result = -1;
         var temp = [];
@@ -210,7 +218,7 @@ app.ViewModel = function() {
 
             return self.filterList;
         } // else
-    }); // filterText
+    }); // hotelDisplay
 
 }; // ViewModel
 
@@ -230,6 +238,8 @@ app.HotelView = function() {
     self.animateIn = 'animated slideInLeft no-overlay';
     self.animateOut = 'animated fadeOutLeft overlay';
     self.h3 = document.getElementsByTagName('h3');
+    self.def = document.getElementById('definitions');
+    self.aside = document.getElementsByTagName('aside')[0];
 
     self.slideInLeft = function() {
         slide.className = self.animateIn;
@@ -237,6 +247,14 @@ app.HotelView = function() {
 
     self.slideOutLeft = function() {
         slide.className = self.animateOut;
+    };
+
+    self.openInfo = function() {
+        self.def.style.display = 'block';
+    };
+
+    self.closeInfo = function() {
+        self.def.style.display = '';
     };
 
     self.toggleDisplay = function(headElem, iconClass) {

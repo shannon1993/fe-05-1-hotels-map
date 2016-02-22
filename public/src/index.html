@@ -28,16 +28,34 @@
         </form>
 
         <!-- Diamond Rating -->
-        <h3><i class="icons icon-down"></i>Diamond Rating</h3>
-        <ul><!-- <ul class="hidden"> -->
-          <li id="about"><i class="icons icon-info"></i>About Diamond Ratings</li>
+        <h3><i class="icons icon-right"></i>Diamond Rating</h3>
+        <ul class="ratings">
+          <li id="about" data-bind="click: open"><i class="icons icon-info"></i>About Diamond Ratings</li>
           <!-- Knockout Info:
             checkedValue = Value of the checkbox, i.e. "5"
-            checked = Saves the checkbox value to the array "ratingsChecked" and removes it if un-checked
+            checked = KO saves the checkbox value to the array "ratingsChecked" and removes it if un-checked
           -->
           <!-- ko foreach: ratings -->
-          <li><input data-bind="checkedValue: ratingValue, checked: $root.ratingsChecked, click: $root.filterRatings" class="dbox" type="checkbox"> <i data-bind="text: icon" class="diamonds"></i></li>
+          <li><input data-bind="checkedValue: ratingValue, checked: $root.ratingsChecked, click: $root.filterRatings" class="rbox" type="checkbox"> <i data-bind="text: icon" class="diamonds"></i></li>
           <!-- /ko -->
+          <li>Source: <a href="http://newsroom.aaa.com/diamond-ratings/" title="AAA Diamond Rated Hotels">AAA</a></li>
+        </ul>
+
+        <!-- Diamond Rating Definitions -->
+        <ul id="definitions">
+          <li data-bind="click: close">Close</li>
+          <li>AAA Diamond ratings for hotels represent a combination of the overall quality, range of facilities, and level of services offered by the property. The descriptive ratings are assigned exclusively to properties that meet and uphold AAA’s rigorous Approval standards.</li>
+          <li><i class="diamonds">aaaaa</i><br>
+          Ultimate luxury, sophistication and comfort with extraordinary physical attributes, meticulous personalized service, extensive amenities and impeccable standards of excellence.</li>
+          <li><i class="diamonds">aaaa</i><br>
+          Refined, stylish with upscale physical attributes, extensive amenities and high degree of hospitality, service and attention to detail.</li>
+          <li><i class="diamonds">aaa</i><br>
+          Distinguished, multi-faceted with enhanced physical attributes, amenities and guest comforts.</li>
+          <li><i class="diamonds">aa</i><br>
+          Affordable, with modestly enhanced facilities, decor and amenities.</li>
+          <li><i class="diamonds">a</i><br>
+          Budget-oriented, offering basic comfort and hospitality.</li>
+          <li>Source: <a href="http://newsroom.aaa.com/diamond-ratings/diamond-rating-definitions/">AAA Diamond Rating Definitions</a></li>
         </ul>
 
         <!-- Hotel List -->
