@@ -170,27 +170,13 @@ app.ViewModel = function() {
         return true;
     };
 
-    self.ratingsMatch = function(rlength, diamond) {
-        var ratings = self.ratingsChecked();
-        var d = 0;
-        var found = false;
-        for(d; d < rlength; d++) {
-            if(diamond === ratings[d]) {
-                found = true;
-                break;
-            }
-        }
-
-        return found;
-    };
-
     self.hotelDisplay = ko.computed(function() {
         var result = -1;
         var temp = [];
         var query = self.filterText().toLowerCase();
         var rlength = self.ratingsChecked().length;
         var diamond = 0;
-        var match = false;
+        var match = -1;
 
         // Copy the original hotel list array
         self.filterList(self.hotelList());
@@ -206,11 +192,11 @@ app.ViewModel = function() {
 
                 // Ratings check
                 if(rlength > 0)
-                    match = self.ratingsMatch(rlength, diamond);
+                    match = self.ratingsChecked.indexOf(diamond);
                 else
-                    match = true;
+                    match = 0;
 
-                if(result >= 0 && match) {
+                if(result >= 0 && match >= 0) {
                     hotel.marker.setVisible(true);
                     temp.push(hotel);
                 } else {
