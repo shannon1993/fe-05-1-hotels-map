@@ -112,10 +112,10 @@ app.ViewModel = function() {
     self.filterText = ko.observable('');
     self.ratingsChecked = ko.observableArray();
     self.ratings = ko.observableArray([
-        {ratingValue: 5, icon: 'aaaaa'},
-        {ratingValue: 4, icon: 'aaaa'},
-        {ratingValue: 3, icon: 'aaa'},
-        {ratingValue: 2, icon: 'aa'},
+        {ratingValue: 5, icon: 'aaaaa', color: 'red'},
+        {ratingValue: 4, icon: 'aaaa', color: 'yellow'},
+        {ratingValue: 3, icon: 'aaa', color: 'green'},
+        {ratingValue: 2, icon: 'aa', color: 'purple'},
     ]);
 
     self.nameSort = function(left, right) {
@@ -190,6 +190,12 @@ app.ViewModel = function() {
         self.filterList(self.hotelList());
 
         if (!query && rlength <= 0) {
+            // Make all the hotel markers visible
+            self.filterList().forEach(function(hotel, index) {
+                // Prevents error if marker is not set yet
+                if(hotel.marker) hotel.marker.setVisible(true);
+            });
+
             // Return all the hotels
             return self.filterList;
         } else {
@@ -239,7 +245,6 @@ app.HotelView = function() {
     self.animateOut = 'animated fadeOutLeft overlay';
     self.h3 = document.getElementsByTagName('h3');
     self.def = document.getElementById('definitions');
-    self.aside = document.getElementsByTagName('aside')[0];
 
     self.slideInLeft = function() {
         slide.className = self.animateIn;
@@ -274,7 +279,17 @@ app.HotelView = function() {
     };
 
     self.setIcon = function(e) {
-        e.target.firstChild.className = self.toggleDisplay(e.target, e.target.firstChild.className);
+        var elem;
+
+        // Fix for when the triangle icon is clicked inside the h3
+        if(e.target.nodeName === 'H3') {
+            elem = e.target;
+        } else {
+            // Traverse up the DOM one level
+            elem = e.target.parentNode;
+        }
+
+        elem.firstChild.className = self.toggleDisplay(elem, elem.firstChild.className);
     };
 
     self.init = function() {
@@ -317,7 +332,7 @@ app.MapView = function() {
 
     // Source: https://sites.google.com/site/gmapsdevelopment/
     self.markerUrl = 'http://maps.google.com/mapfiles/ms/icons/';
-    self.markerColors = ['pink', 'purple', 'blue', 'green', 'yellow', 'red'];
+    self.markerColors = ['pink', 'blue', 'purple', 'green', 'yellow', 'red'];
 
     /**
      * Displays a Google Map
