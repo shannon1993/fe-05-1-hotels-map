@@ -193,7 +193,7 @@ app.ViewModel = function() {
         var match = false;
 
         // Copy the original hotel list array
-        self.filterList(self.getHotels());
+        self.filterList(self.hotelList());
 
         if (!query && rlength <= 0) {
             // Return all the hotels
