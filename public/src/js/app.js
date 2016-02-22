@@ -110,6 +110,13 @@ app.ViewModel = function() {
     self.hotelList = ko.observableArray();
     self.filterList = ko.observableArray();
     self.filterText = ko.observable('');
+    self.ratingsChecked = ko.observableArray();
+    self.ratings = ko.observableArray([
+        {ratingValue: 5, icon: 'aaaaa'},
+        {ratingValue: 4, icon: 'aaaa'},
+        {ratingValue: 3, icon: 'aaa'},
+        {ratingValue: 2, icon: 'aa'},
+    ]);
 
     self.nameSort = function(left, right) {
         return left.name == right.name ? 0 : (left.name < right.name ? -1 : 1);
@@ -131,7 +138,6 @@ app.ViewModel = function() {
 
     self.init = function() {
         self.hotelList(self.getHotels());
-        self.filterList(self.getHotels());
         app.mv.initMap();
     };
 
@@ -145,6 +151,11 @@ app.ViewModel = function() {
         google.maps.event.trigger(app.mv.map,'resize');
     };
 
+    self.noEnter = function(data, event) {
+        // Prevent form submission
+        return false;
+    };
+
     self.gotoHotel = function(hotel) {
         // Re-center the map on the marker that was clicked
         app.mv.map.setCenter(hotel.location);
@@ -152,30 +163,67 @@ app.ViewModel = function() {
         app.mv.activateMarker(hotel);
     };
 
-    // Subscribe to the filterText observable
-    // This function will be called whenever the user types in text
-    self.filterText.subscribe(function (query) {
+    self.filterRatings = function(data, event) {
+        self.hotelDisplay();
+
+        // Return true to toggle checkbox
+        return true;
+    };
+
+    self.ratingsMatch = function(rlength, diamond) {
+        var ratings = self.ratingsChecked();
+        var d = 0;
+        var found = false;
+        for(d; d < rlength; d++) {
+            if(diamond === ratings[d]) {
+                found = true;
+                break;
+            }
+        }
+
+        return found;
+    };
+
+    self.hotelDisplay = ko.computed(function() {
         var result = -1;
         var temp = [];
+        var query = self.filterText().toLowerCase();
+        var rlength = self.ratingsChecked().length;
+        var diamond = 0;
+        var match = false;
 
-        self.hotelList().forEach(function(hotel, index) {
-            // Check if the query matches with the hotel name
-            result = hotel.name.toLowerCase().indexOf(query.toLowerCase());
+        // Copy the original hotel list array
+        self.filterList(self.getHotels());
 
-            if(result >= 0) {
-                hotel.marker.setVisible(true);
-                temp.push(hotel);
-            } else {
-                hotel.marker.setVisible(false);
-                app.mv.infoWindow.close();
-            }
-        }); // forEach
+        if (!query && rlength <= 0) {
+            // Return all the hotels
+            return self.filterList;
+        } else {
+            self.filterList().forEach(function(hotel, index) {
+                // Check if the query matches with the hotel name
+                result = hotel.name.toLowerCase().indexOf(query);
+                diamond = hotel.diamonds;
 
-        // Sort the array
-        temp.sort(self.nameSort);
+                // Ratings check
+                if(rlength > 0)
+                    match = self.ratingsMatch(rlength, diamond);
+                else
+                    match = true;
 
-        // Save the sorted hotels back to the ko observable array
-        self.filterList(temp);
+                if(result >= 0 && match) {
+                    hotel.marker.setVisible(true);
+                    temp.push(hotel);
+                } else {
+                    hotel.marker.setVisible(false);
+                    app.mv.infoWindow.close();
+                }
+            }); // forEach
+
+            // Save the filtered hotels back to the ko observable array
+            self.filterList(temp);
+
+            return self.filterList;
+        } // else
     }); // filterText
 
 }; // ViewModel
