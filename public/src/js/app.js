@@ -38,6 +38,7 @@ app.Hotel = function() {
     var self = this;
 
     self.hotels = ko.observableArray();
+    self.yelp = {};
 
     /**
      * @typedef Hotels
@@ -66,12 +67,14 @@ app.Hotel = function() {
         var hotel = [];
         var length = 0;
 
-        hotelsRef = new Firebase('https://crackling-heat-3113.firebaseio.com/hotels');
+        hotelsRef = new Firebase('https://crackling-heat-3113.firebaseio.com');
 
         // Read the data only once
         hotelsRef.once('value', function(dataSnapshot) {
 
-            hotelsJSON = dataSnapshot.val();
+            self.yelp = dataSnapshot.child('yelp').val();
+
+            hotelsJSON = dataSnapshot.child('hotels').val();
 
             // Store all the hotel data in app.Hotel.hotels
             length = hotelsJSON.length;
@@ -80,6 +83,9 @@ app.Hotel = function() {
 
                 // Save each hotel into a Knockout Observable Array
                 self.hotels.push(hotel);
+
+                // Save yelp data of the hotel
+                self.getYelpContent(hotel);
             }
 
             // Initialize the map with the hotels
@@ -91,8 +97,59 @@ app.Hotel = function() {
             console.log("The read failed: " + errorObject.code);
             self.hotels.push({"hotels": [{"name": "Could not load hotel list. Try again later."}]} );
         });
+    }; // init
 
-    };
+    self.getYelpContent = function(hotel) {
+        /**
+         * Generates a random number and returns it as a string for OAuthentication
+         * @return {string}
+         */
+        function nonce_generate() {
+          return (Math.floor(Math.random() * 1e12).toString());
+        }
+
+        var content = '';
+        var yelpUrl = 'http://api.yelp.com/v2/business/' + hotel.id;
+        var auth = app.vm.getYelp();
+        var latlng = location.lat + ',' + location.lng;
+        var parameters = {
+          oauth_consumer_key: auth.CONSUMER_KEY,
+          oauth_token: auth.TOKEN,
+          oauth_nonce: nonce_generate(),
+          oauth_timestamp: Math.floor(Date.now() / 1000),
+          oauth_signature_method: 'HMAC-SHA1',
+          oauth_version: '1.0',
+          callback: 'cb'
+
+        };
+        var encodedSignature = oauthSignature.generate('GET',yelpUrl, parameters, auth.CONSUMER_SECRET, auth.TOKEN_SECRET);
+        parameters.oauth_signature = encodedSignature;
+        var settings = {
+          url: yelpUrl,
+          data: parameters,
+          cache: true,                // This is crucial to include as well to prevent jQuery from adding on a cache-buster parameter "_=23489489749837", invalidating our oauth-signature
+          dataType: 'jsonp',
+          success: function(results) {
+            // Do stuff with results
+            //console.log('success');
+            //console.log('results.name: ' + results.name);
+
+            content = '<h4>' + results.name + '</h4>';
+            content += '<img src="' + results.snippet_image_url + '">';
+            hotel.content = content;
+          },
+          error: function(err) {
+            // Do stuff on fail
+            console.log('fail');
+            console.dir(err);
+            hotel.content = 'Error retrieving yelp data. Please try again.';
+          }
+        };
+
+        // Send AJAX query via jQuery library.
+        $.ajax(settings);
+
+    }; // getYelpContent
 }; // Hotel
 
 
@@ -135,6 +192,10 @@ app.ViewModel = function() {
     self.getHotelsLength = ko.computed(function() {
         return app.model.hotels().length;
     });
+
+    self.getYelp = function() {
+        return app.model.yelp;
+    };
 
     self.init = function() {
         self.hotelList(self.getHotels());
@@ -400,8 +461,9 @@ app.MapView = function() {
     }; // setInfoWin
 
     self.activateMarker = function(hotel) {
+        console.log('hotel.content: ' + hotel.content);
         // Set the content
-        self.infoWindow.setContent(hotel.name);
+        self.infoWindow.setContent(hotel.content);
 
         self.infoWindow.open(self.map, hotel.marker);
 
