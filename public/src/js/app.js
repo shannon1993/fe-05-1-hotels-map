@@ -80,12 +80,10 @@ app.Hotel = function() {
             length = hotelsJSON.length;
             for (i; i < length; i++) {
                 hotel = hotelsJSON[i];
+                hotel.content = null;
 
                 // Save each hotel into a Knockout Observable Array
                 self.hotels.push(hotel);
-
-                // Save yelp data of the hotel
-                self.getYelpContent(hotel);
             }
 
             // Initialize the map with the hotels
@@ -99,57 +97,6 @@ app.Hotel = function() {
         });
     }; // init
 
-    self.getYelpContent = function(hotel) {
-        /**
-         * Generates a random number and returns it as a string for OAuthentication
-         * @return {string}
-         */
-        function nonce_generate() {
-          return (Math.floor(Math.random() * 1e12).toString());
-        }
-
-        var content = '';
-        var yelpUrl = 'http://api.yelp.com/v2/business/' + hotel.id;
-        var auth = app.vm.getYelp();
-        var latlng = location.lat + ',' + location.lng;
-        var parameters = {
-          oauth_consumer_key: auth.CONSUMER_KEY,
-          oauth_token: auth.TOKEN,
-          oauth_nonce: nonce_generate(),
-          oauth_timestamp: Math.floor(Date.now() / 1000),
-          oauth_signature_method: 'HMAC-SHA1',
-          oauth_version: '1.0',
-          callback: 'cb'
-
-        };
-        var encodedSignature = oauthSignature.generate('GET',yelpUrl, parameters, auth.CONSUMER_SECRET, auth.TOKEN_SECRET);
-        parameters.oauth_signature = encodedSignature;
-        var settings = {
-          url: yelpUrl,
-          data: parameters,
-          cache: true,                // This is crucial to include as well to prevent jQuery from adding on a cache-buster parameter "_=23489489749837", invalidating our oauth-signature
-          dataType: 'jsonp',
-          success: function(results) {
-            // Do stuff with results
-            //console.log('success');
-            //console.log('results.name: ' + results.name);
-
-            content = '<h4>' + results.name + '</h4>';
-            content += '<img src="' + results.snippet_image_url + '">';
-            hotel.content = content;
-          },
-          error: function(err) {
-            // Do stuff on fail
-            console.log('fail');
-            console.dir(err);
-            hotel.content = 'Error retrieving yelp data. Please try again.';
-          }
-        };
-
-        // Send AJAX query via jQuery library.
-        $.ajax(settings);
-
-    }; // getYelpContent
 }; // Hotel
 
 
@@ -193,7 +140,7 @@ app.ViewModel = function() {
         return app.model.hotels().length;
     });
 
-    self.getYelp = function() {
+    self.getKeys = function() {
         return app.model.yelp;
     };
 
@@ -221,7 +168,10 @@ app.ViewModel = function() {
         // Re-center the map on the marker that was clicked
         app.mv.map.setCenter(hotel.location);
 
-        app.mv.activateMarker(hotel);
+        app.mv.infoWindow.close();
+
+        // Manually trigger the click event for the marker
+        google.maps.event.trigger(hotel.marker, 'click');
     };
 
     self.filterRatings = function(data, event) {
@@ -390,6 +340,7 @@ app.MapView = function() {
             position: google.maps.ControlPosition.RIGHT_TOP
         }
     };
+    self.preload = '<div class="preload">Loading...</div>';
 
     // Source: https://sites.google.com/site/gmapsdevelopment/
     self.markerUrl = 'http://maps.google.com/mapfiles/ms/icons/';
@@ -446,27 +397,11 @@ app.MapView = function() {
                 icon:  self.markerUrl + hotel.color + '.png'
             }); // marker
 
-            // Open an info window when a marker is clicked
             self.setInfoWin(hotel);
         } // for
     }; // createMarkers
 
-    self.setInfoWin = function(hotel) {
-
-        // Open the infoWindow when a marker is clicked
-        google.maps.event.addListener(hotel.marker, 'click', function() {
-            self.activateMarker(hotel);
-        });
-
-    }; // setInfoWin
-
-    self.activateMarker = function(hotel) {
-        console.log('hotel.content: ' + hotel.content);
-        // Set the content
-        self.infoWindow.setContent(hotel.content);
-
-        self.infoWindow.open(self.map, hotel.marker);
-
+    self.animateMarker = function(hotel) {
         // Animate the marker
         hotel.marker.setAnimation(google.maps.Animation.BOUNCE);
 
@@ -478,6 +413,81 @@ app.MapView = function() {
             hotel.marker.setAnimation(null);
             hotel.marker.icon = self.markerUrl + hotel.color + '.png';
         }, 2100);
-    }; // activateMarker
+    }; // animateMarker
+
+    self.setInfoWin = function(hotel) {
+        // Open the infoWindow when a marker is clicked
+        google.maps.event.addListener(hotel.marker, 'click', function() {
+            if(!hotel.content) {
+                self.infoWindow.setContent(self.preload);
+                self.getContent(hotel);
+            }
+            else
+                self.infoWindow.setContent(hotel.content);
+
+            self.infoWindow.open(self.map, hotel.marker);
+
+            self.animateMarker(hotel);
+        });
+
+    }; // setInfoWin
+
+    self.getContent = function(hotel) {
+        /**
+         * Generates a random number and returns it as a string for OAuthentication
+         * @return {string}
+         */
+        function nonce_generate() {
+          return (Math.floor(Math.random() * 1e12).toString());
+        }
+
+        var content = '';
+        var yelpUrl = 'http://api.yelp.com/v2/business/' + hotel.id;
+        var auth = app.vm.getKeys();
+        var latlng = location.lat + ',' + location.lng;
+        var parameters = {
+          oauth_consumer_key: auth.CONSUMER_KEY,
+          oauth_token: auth.TOKEN,
+          oauth_nonce: nonce_generate(),
+          oauth_timestamp: Math.floor(Date.now() / 1000),
+          oauth_signature_method: 'HMAC-SHA1',
+          oauth_version: '1.0',
+          callback: 'cb'
+
+        };
+        var encodedSignature = oauthSignature.generate('GET',yelpUrl, parameters, auth.CONSUMER_SECRET, auth.TOKEN_SECRET);
+        parameters.oauth_signature = encodedSignature;
+        var settings = {
+          url: yelpUrl,
+          data: parameters,
+          cache: true,                // This is crucial to include as well to prevent jQuery from adding on a cache-buster parameter "_=23489489749837", invalidating our oauth-signature
+          dataType: 'jsonp',
+          success: function(results) {
+            console.log('success');
+            //console.log('results.name: ' + results.name);
+
+            content = '<h4><a href="' + results.url + '">' + results.name + '</a></h4>';
+            content += '<img src="' + results.rating_img_url_small + '"> <br>' + results.review_count + ' reviews <br>';
+            content += '<img src="' + results.image_url + '">';
+            //content += results.snippet_text;
+            hotel.content = content;
+
+            // Set the content
+            self.infoWindow.setContent(hotel.content);
+
+
+          },
+          error: function(err) {
+            console.log('fail');
+            console.dir(err);
+            hotel.content = 'Error retrieving yelp data. Please try again.';
+            self.infoWindow.setContent(hotel.content);
+          }
+        };
+
+        // Send AJAX query via jQuery library.
+        $.ajax(settings);
+
+    }; // getContent
 
 }; // MapView

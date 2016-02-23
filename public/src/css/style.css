@@ -215,6 +215,17 @@ aside .icon-close:hover {
     cursor: pointer;
 }
 
+.preload {
+    color: #000;
+    height: 152px;
+    width: 100px;
+}
+
+/* google map info window */
+.gm-style-iw {
+    color: #000;
+}
+
 .top {
     height: 50px;
     color:#204f26;
