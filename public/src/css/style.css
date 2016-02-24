@@ -109,7 +109,8 @@ header {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
     font-family: 'AyitaProSemiBold', sans-serif;
     margin: 0;
 }
@@ -224,6 +225,34 @@ aside .icon-close:hover {
 /* google map info window */
 .gm-style-iw {
     color: #000;
+    margin: 0;
+}
+
+.gm-info-container {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    font-size: 96%;
+    max-width: 310px;
+}
+
+.gm-info-image,
+.gm-infoimage img {
+    width: 100px;
+    height: 100px;
+}
+
+.gm-info-text {
+    max-width: 200px;
+    margin: 0 0 0 8px;
+}
+
+.gm-info-text img {
+    width: 138px;
+    height: 30px;
 }
 
 .top {
@@ -234,6 +263,10 @@ aside .icon-close:hover {
 
 .big {
     font-size: 36px;
+}
+
+.small {
+    font-size: 16px;
 }
 
 .ratings {

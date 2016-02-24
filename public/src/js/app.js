@@ -122,6 +122,10 @@ app.ViewModel = function() {
         {ratingValue: 2, icon: 'aa', color: 'purple'},
     ]);
 
+    self.getRatings = function() {
+        return self.ratings();
+    };
+
     self.nameSort = function(left, right) {
         return left.name == right.name ? 0 : (left.name < right.name ? -1 : 1);
     };
@@ -462,19 +466,16 @@ app.MapView = function() {
           data: parameters,
           cache: true,                // This is crucial to include as well to prevent jQuery from adding on a cache-buster parameter "_=23489489749837", invalidating our oauth-signature
           dataType: 'jsonp',
-          success: function(results) {
-            console.log('success');
-            //console.log('results.name: ' + results.name);
+          success: function(data) {
 
-            content = '<h4><a href="' + results.url + '">' + results.name + '</a></h4>';
-            content += '<img src="' + results.rating_img_url_small + '"> <br>' + results.review_count + ' reviews <br>';
-            content += '<img src="' + results.image_url + '">';
-            //content += results.snippet_text;
-            hotel.content = content;
+            hotel.content = self.getTemplate(hotel.name,
+                                             hotel.diamonds,
+                                             data.image_url,
+                                             data.snippet_text,
+                                             data.url);
 
             // Set the content
             self.infoWindow.setContent(hotel.content);
-
 
           },
           error: function(err) {
@@ -489,5 +490,33 @@ app.MapView = function() {
         $.ajax(settings);
 
     }; // getContent
+
+    self.getTemplate = function(name, diamonds, image, review, url) {
+        var i = 0;
+        var d = app.vm.getRatings();
+        var dlength = d.length;
+        var template = '';
+        var icon = '';
+
+        // Match the diamond rating to the icon text
+        for(i; i < dlength; i++) {
+            if(d[i].ratingValue === diamonds) {
+                icon = d[i].icon;
+                break;
+            }
+        }
+
+        template = '<h4>' + name + '</h4>';
+        template += '<i class="diamonds small">' + icon + '</i>';
+        template += '<div class="gm-info-container">';
+        template += '  <div class="gm-info-image"><img src="' + image + '"></div>';
+        template += '  <div class="gm-info-text">';
+        template +=    '<img src="images/yelp_reviews.png" alt="Yelp Reviews"><br>';
+        template +=    review + ' <a href="' + url + '">read more</a>';
+        template += '  </div>';
+        template += '</div>';
+
+        return template;
+    }; // getTemplate
 
 }; // MapView
