@@ -262,11 +262,11 @@ app.HotelView = function() {
     self.def = document.getElementById('definitions');
 
     self.slideInLeft = function() {
-        slide.className = self.animateIn;
+        self.slide.className = self.animateIn;
     };
 
     self.slideOutLeft = function() {
-        slide.className = self.animateOut;
+        self.slide.className = self.animateOut;
     };
 
     self.openInfo = function() {
@@ -445,10 +445,8 @@ app.MapView = function() {
           return (Math.floor(Math.random() * 1e12).toString());
         }
 
-        var content = '';
         var yelpUrl = 'http://api.yelp.com/v2/business/' + hotel.id;
         var auth = app.vm.getKeys();
-        var latlng = location.lat + ',' + location.lng;
         var parameters = {
           oauth_consumer_key: auth.CONSUMER_KEY,
           oauth_token: auth.TOKEN,
@@ -457,37 +455,31 @@ app.MapView = function() {
           oauth_signature_method: 'HMAC-SHA1',
           oauth_version: '1.0',
           callback: 'cb'
-
         };
-        var encodedSignature = oauthSignature.generate('GET',yelpUrl, parameters, auth.CONSUMER_SECRET, auth.TOKEN_SECRET);
+        var encodedSignature = oauthSignature.generate('GET',
+                                                        yelpUrl,
+                                                        parameters,
+                                                        auth.CONSUMER_SECRET,
+                                                        auth.TOKEN_SECRET);
         parameters.oauth_signature = encodedSignature;
-        var settings = {
-          url: yelpUrl,
-          data: parameters,
-          cache: true,                // This is crucial to include as well to prevent jQuery from adding on a cache-buster parameter "_=23489489749837", invalidating our oauth-signature
-          dataType: 'jsonp',
-          success: function(data) {
 
-            hotel.content = self.getTemplate(hotel.name,
-                                             hotel.diamonds,
-                                             data.image_url,
-                                             data.snippet_text,
-                                             data.url);
-
-            // Set the content
-            self.infoWindow.setContent(hotel.content);
-
-          },
-          error: function(err) {
-            console.log('fail');
-            console.dir(err);
-            hotel.content = 'Error retrieving yelp data. Please try again.';
-            self.infoWindow.setContent(hotel.content);
-          }
-        };
-
-        // Send AJAX query via jQuery library.
-        $.ajax(settings);
+        $jsonp.send(yelpUrl, {
+            callbackName: 'cb',
+            data: parameters,
+            onSuccess: function(json){
+                hotel.content = self.getTemplate(hotel.name,
+                                                 hotel.diamonds,
+                                                 json.image_url,
+                                                 json.snippet_text,
+                                                 json.url);
+                self.infoWindow.setContent(hotel.content);
+            },
+            onTimeout: function(){
+                hotel.content = 'Error retrieving Yelp data.<br>Please refresh the page.';
+                self.infoWindow.setContent(hotel.content);
+            },
+                timeout: 5
+        });
 
     }; // getContent
 
@@ -520,3 +512,50 @@ app.MapView = function() {
     }; // getTemplate
 
 }; // MapView
+
+
+/**
+ * jsonp.js, (c) Przemek Sobstel 2012, License: MIT
+ * {@link  https://github.com/sobstel/jsonp.js | jsonp.js}
+ * @param  {string} - url
+ * @param  {object} - parameters
+ * @return {string} - json
+ */
+var $jsonp = (function(){
+  var that = {};
+
+  that.send = function(src, opt) {
+    var options = opt || {},
+      callback_name = options.callbackName || 'callback',
+      on_success = options.onSuccess || function(){},
+      on_timeout = options.onTimeout || function(){},
+      timeout = options.timeout || 10,
+      params = options.data || {};
+
+    var query = "?";
+    for (var key in params) {
+        if (params.hasOwnProperty(key)) {
+            query += encodeURIComponent(key) + "=" + encodeURIComponent(params[key]) + "&";
+        }
+    }
+
+    var timeout_trigger = window.setTimeout(function(){
+      window[callback_name] = function(){};
+      on_timeout();
+    }, timeout * 1000);
+
+    window[callback_name] = function(data){
+      window.clearTimeout(timeout_trigger);
+      on_success(data);
+    };
+
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.async = true;
+    script.src = src + query;
+
+    document.getElementsByTagName('head')[0].appendChild(script);
+  };
+
+  return that;
+})();
