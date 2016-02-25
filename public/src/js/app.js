@@ -90,10 +90,10 @@ app.Hotel = function() {
             app.vm.init();
 
         }, function (errorObject) {
-            // TODO: display error to user
-            // TODO: return at least 5 hotels from local file?
-            console.log("The read failed: " + errorObject.code);
-            self.hotels.push({"hotels": [{"name": "Could not load hotel list. Try again later."}]} );
+            // Called when client does not have permission to read this data
+            var errMsg = 'Could not load hotel data. The read failed with error code: ';
+                errMsg += errorObject.code + '. Please contact the webmaster.';
+            document.getElementById('map').innerHTML = errMsg;
         });
     }; // init
 
@@ -517,6 +517,7 @@ app.MapView = function() {
 /**
  * jsonp.js, (c) Przemek Sobstel 2012, License: MIT
  * {@link  https://github.com/sobstel/jsonp.js | jsonp.js}
+ * Custom modificatins by me: Add data option to pass parameters
  * @param  {string} - url
  * @param  {object} - parameters
  * @return {string} - json
