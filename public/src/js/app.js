@@ -26,6 +26,12 @@ var initApp = function() {
 };
 
 
+var errorHandler = function(x) {
+    var m = document.getElementById('map');
+    m.innerHTML = 'There was an error loading the ' + x + ' script.';
+};
+
+
 /**
  * Hotel
  * @name app.Hotel

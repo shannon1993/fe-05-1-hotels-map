@@ -417,6 +417,7 @@ aside .icon-close:hover {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.8em;
+    background-color: rgba(55, 129, 205, 0.8);
 }
 
 #spinner {
