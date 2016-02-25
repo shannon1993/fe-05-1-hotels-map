@@ -365,7 +365,7 @@ app.MapView = function() {
             position: google.maps.ControlPosition.RIGHT_TOP
         }
     };
-    self.preload = '<div class="preload">Loading...</div>';
+    self.preload = '<div class="preload">Loading...<div class="spin"></div></div>';
 
     // Source: https://sites.google.com/site/gmapsdevelopment/
     self.markerUrl = 'http://maps.google.com/mapfiles/ms/icons/';

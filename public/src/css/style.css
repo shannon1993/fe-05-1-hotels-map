@@ -216,12 +216,6 @@ aside .icon-close:hover {
     cursor: pointer;
 }
 
-.preload {
-    color: #000;
-    height: 152px;
-    width: 100px;
-}
-
 /* google map info window */
 .gm-style-iw {
     color: #000;
@@ -430,6 +424,28 @@ aside .icon-close:hover {
     -moz-animation: rotation 0.7s infinite linear;
     animation: rotation 0.7s infinite linear;
     border: 0.5em solid rgba(0,0,0,0.2);
+    border-top-color: rgba(0,0,0,0.8);
+    border-radius: 100%;
+}
+
+.preload {
+    color: #000;
+    height: 152px;
+    width: 100px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.preload .spin {
+    font-size: 30px;
+    height: 1em;
+    width: 1em;
+    position: relative;
+    margin: 30px auto 10px auto;
+    -webkit-animation: rotation 0.7s infinite linear;
+    -moz-animation: rotation 0.7s infinite linear;
+    animation: rotation 0.7s infinite linear;
+    border: 10px solid rgba(0,0,0,0.2);
     border-top-color: rgba(0,0,0,0.8);
     border-radius: 100%;
 }
