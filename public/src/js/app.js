@@ -67,6 +67,9 @@ app.Hotel = function() {
         var hotel = [];
         var length = 0;
 
+        // Start the 10 second timer
+        self.reqTimeout();
+
         hotelsRef = new Firebase('https://crackling-heat-3113.firebaseio.com');
 
         // Read the data only once
@@ -96,6 +99,18 @@ app.Hotel = function() {
             document.getElementById('map').innerHTML = errMsg;
         });
     }; // init
+
+    self.reqTimeout = function () {
+        var m = document.getElementById('map');
+        var errMsg = 'Map request timed out. Check your connection and refresh the page.';
+        setTimeout( function() {
+            // Check to see if the map is loaded
+            if(m.children[0].nodeName === 'FIGCAPTION') {
+               // Display error message if no map found
+               m.innerHTML = errMsg;
+            }
+        }, 10000);
+    }; // reqTimeout
 
 }; // Hotel
 
