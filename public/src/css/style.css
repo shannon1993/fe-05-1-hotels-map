@@ -157,36 +157,19 @@ main {
     position: relative;
 }
 
-
 aside {
     flex-basis: 320px;
     min-width: 320px;
     margin: 20px 0 0 0;
-    top: -70px; /* top align with menu bar */
+    top: -70px; /* top aligns with menu bar */
     z-index: 99;
 }
 
-.no-overlay {
-    /* Places list view next to map */
-    position: relative;
-
-    /* Stretches height to bottom of page, minus top value */
-    height: calc(100% - 70px);
-}
-
-.overlay {
-    /* Overlays list view over the map */
-    position: absolute;
-
-    /* Shrinks height to fit container */
-    height: auto;
-}
 
 aside input {
     background-color:#ccc;
     margin: 4px 0 4px 0px;
 }
-
 
 aside ul {
     margin: 0;
@@ -214,6 +197,37 @@ aside li:hover,
 aside .icon-close:hover {
     color:#900;
     cursor: pointer;
+}
+
+.no-overlay {
+    /* Places list view next to map */
+    position: relative;
+
+    /* Stretches height to bottom of page, minus top value */
+    height: calc(100% - 70px);
+}
+
+.overlay {
+    /* Overlays list view over the map */
+    position: absolute;
+
+    /* Shrinks height to fit container */
+    height: auto;
+}
+
+.hidden {
+    /* https://scotch.io/tutorials/off-canvas-menus-with-css3-transitions-and-transforms */
+    -moz-transform: translate3d(-100%, 0, 0);
+    -ms-transform: translate3d(-100%, 0, 0);
+    -o-transform: translate3d-100%, 0, 0);
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 /* google map info window */
@@ -370,7 +384,7 @@ aside .icon-close:hover {
 @media only screen and (max-width: 800px) {
     aside li,
     .ratings li {
-    background-color: rgba(55, 129, 205, 0.8);
+        background-color: rgba(55, 129, 205, 0.8);
     }
 
     .ratings li:hover {
@@ -384,8 +398,8 @@ aside .icon-close:hover {
 
     /* Screen is smaller, so always overlay */
     .no-overlay {
-    position: absolute;
-    height: auto;
+        position: absolute;
+        height: auto;
     }
 }
 
@@ -427,7 +441,6 @@ aside .icon-close:hover {
     border-top-color: rgba(0,0,0,0.8);
     border-radius: 100%;
 }
-
 .preload {
     color: #000;
     height: 152px;
