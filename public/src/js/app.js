@@ -496,8 +496,8 @@ app.MapView = function() {
                 self.infoWindow.setContent(hotel.content);
             },
             onTimeout: function(){
-                hotel.content = 'Error retrieving Yelp data.<br>Please refresh the page.';
-                self.infoWindow.setContent(hotel.content);
+                hotel.content = null;
+                self.infoWindow.setContent('Error retrieving Yelp data.<br>Please try again.');
             },
                 timeout: 5
         });
