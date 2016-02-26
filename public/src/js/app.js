@@ -6,11 +6,12 @@ var app = app || {};
 
 
 /**
- * Callback for Google Maps.
- * Runs after the maps api is loaded.
+ * Callback for Google Maps. Runs after the maps api is loaded.
+ *
  * @function initApp
+ * @memberof app
  */
-var initApp = function() {
+app.init = function() {
     app.model = new app.Hotel();
     app.vm = new app.ViewModel();
     app.hv = new app.HotelView();
@@ -30,9 +31,11 @@ var initApp = function() {
 /**
  * Callback for onerror.
  * If a script resource has an error, then a message is displayed.
- * @function errorHandler
+ *
+ * @function app.errorHandler
+ * @memberof app
  */
-var errorHandler = function(x) {
+app.errorHandler = function(x) {
     var m = document.getElementById('map');
     m.innerHTML = 'There was an error loading the ' + x + ' script.';
 };
@@ -56,6 +59,7 @@ app.Hotel = function() {
      * @typedef Hotels
      * @type Object
      * @property {string} name - Name of hotel
+     * @property {string} id - Yelp business ID
      * @property {object} location - Hotel coordinates
      * @property {number} location.lat - Latitude
      * @property {number} location.lng - Longitude
@@ -65,8 +69,7 @@ app.Hotel = function() {
     /**
      * Retrieves the hotels json from Firebase server
      *
-     * @function
-     * @name app.Hotel.init
+     * @function app.Hotel.init
      * @memberof app.Hotel
      * @see {@link https://www.firebase.com/docs/web/guide/retrieving-data.html#section-reading-once}
      * @see {@link https://www.firebase.com/docs/web/api/query/once.html}
@@ -112,6 +115,12 @@ app.Hotel = function() {
         });
     }; // init
 
+    /**
+     * Timer that displays an error message if map has not loaded.
+     *
+     * @function app.Hotel.reqTimeout
+     * @memberof app.Hotel
+     */
     self.reqTimeout = function () {
         var m = document.getElementById('map');
         var errMsg = 'Map request timed out. Check your connection and refresh the page.';
