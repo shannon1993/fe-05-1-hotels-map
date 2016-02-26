@@ -189,6 +189,7 @@ app.ViewModel = function() {
         app.hv.slideOutLeft();
         google.maps.event.trigger(app.mv.map,'resize');
         app.mv.map.setCenter(app.mv.currentLocation);
+        app.mv.map.panBy(0, -120);
     };
 
     self.noEnter = function(data, event) {
