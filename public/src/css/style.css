@@ -185,7 +185,6 @@ aside {
     z-index: 99;
 }
 
-
 aside input {
     background-color:#ccc;
     margin: 4px 0 4px 0px;
@@ -405,7 +404,6 @@ aside .icon-close:hover {
     margin: 20px 20px 0 20px;
     padding: 0;
 }
-
 
 /* MEDIA QUERIES
 ----------------------------------*/
