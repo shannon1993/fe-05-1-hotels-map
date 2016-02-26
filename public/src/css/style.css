@@ -94,9 +94,15 @@ body {
 }
 
 body {
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
     color: #fc3;
     background-color: #303030;
     font-family: Corbel, 'Trebuchet MS', 'Segoe UI', Tahoma, Arial, Helvetica, sans-serif;
@@ -146,19 +152,33 @@ nav .icon-menu {
 }
 
 main {
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-content: flex-start;
-    align-items: stretch;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-align-content: flex-start;
+        -ms-flex-line-pack: start;
+            align-content: flex-start;
+    -webkit-align-items: stretch;
+        -ms-flex-align: stretch;
+            align-items: stretch;
     width: 100%;
     height: 100%;
     position: relative;
 }
 
 aside {
-    flex-basis: 320px;
+    -webkit-flex-basis: 320px;
+        -ms-flex-preferred-size: 320px;
+            flex-basis: 320px;
     min-width: 320px;
     margin: 20px 0 0 0;
     top: -70px; /* top aligns with menu bar */
@@ -216,16 +236,8 @@ aside .icon-close:hover {
 }
 
 .hidden {
-    /* https://scotch.io/tutorials/off-canvas-menus-with-css3-transitions-and-transforms */
-    -moz-transform: translate3d(-100%, 0, 0);
-    -ms-transform: translate3d(-100%, 0, 0);
-    -o-transform: translate3d-100%, 0, 0);
     -webkit-transform: translate3d(-100%, 0, 0);
     transform: translate3d(-100%, 0, 0);
-
-    -moz-backface-visibility: hidden;
-    -ms-backface-visibility: hidden;
-    -o-backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 }
@@ -237,12 +249,24 @@ aside .icon-close:hover {
 }
 
 .gm-info-container {
+    display:-webkit-flex;
+    display:-ms-flexbox;
     display:flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-content: flex-start;
-    align-items: flex-start;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-align-content: flex-start;
+        -ms-flex-line-pack: start;
+            align-content: flex-start;
+    -webkit-align-items: flex-start;
+        -ms-flex-align: start;
+            align-items: flex-start;
     font-size: 96%;
     max-width: 310px;
 }
@@ -370,8 +394,12 @@ aside .icon-close:hover {
 }
 
 #map {
-    flex-grow: 1;
-    flex-basis: 320px;
+    -webkit-flex-grow: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    -webkit-flex-basis: 320px;
+        -ms-flex-preferred-size: 320px;
+            flex-basis: 320px;
     min-width: 320px;
     min-height: 480px;
     margin: 20px 20px 0 20px;
@@ -427,7 +455,6 @@ aside .icon-close:hover {
         max-width: 140px;
         margin: 8px 0 0 0;
     }
-
 }
 
 /* SPINNER ANIMATION
@@ -450,7 +477,6 @@ aside .icon-close:hover {
     position: relative;
     margin: 10px auto 10px auto;
     -webkit-animation: rotation 0.7s infinite linear;
-    -moz-animation: rotation 0.7s infinite linear;
     animation: rotation 0.7s infinite linear;
     border: 0.5em solid rgba(0,0,0,0.2);
     border-top-color: rgba(0,0,0,0.8);
@@ -471,14 +497,11 @@ aside .icon-close:hover {
     position: relative;
     margin: 30px auto 10px auto;
     -webkit-animation: rotation 0.7s infinite linear;
-    -moz-animation: rotation 0.7s infinite linear;
     animation: rotation 0.7s infinite linear;
     border: 10px solid rgba(0,0,0,0.2);
     border-top-color: rgba(0,0,0,0.8);
     border-radius: 100%;
 }
-
-/* credit: http://www.designcouch.com/home/why/2013/05/23/dead-simple-pure-css-loading-spinner */
 
 @-webkit-keyframes rotation {
   from {
@@ -489,29 +512,13 @@ aside .icon-close:hover {
   }
 }
 
-@-moz-keyframes rotation {
-  from {
-    -moz-transform: rotate(0deg);
-  }
-  to {
-    -moz-transform: rotate(359deg);
-  }
-}
-
-@-o-keyframes rotation {
-  from {
-    -o-transform: rotate(0deg);
-  }
-  to {
-    -o-transform: rotate(359deg);
-  }
-}
-
 @keyframes rotation {
   from {
-    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
   }
   to {
-    transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
   }
 }
