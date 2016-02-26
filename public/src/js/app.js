@@ -188,6 +188,7 @@ app.ViewModel = function() {
     self.slideOut = function() {
         app.hv.slideOutLeft();
         google.maps.event.trigger(app.mv.map,'resize');
+        app.mv.map.setCenter(app.mv.currentLocation);
     };
 
     self.noEnter = function(data, event) {
@@ -362,6 +363,7 @@ app.MapView = function() {
     var self = this;
 
     self.infoWindow = null;
+    self.currentLocation = null;
     self.currentMapCenter = null;
     self.originalMapCenter = {lat: 36.1049534, lng: -115.1724043};
     self.mapDiv = document.getElementById('map');
@@ -460,8 +462,8 @@ app.MapView = function() {
                 self.infoWindow.setContent(hotel.content);
 
             self.infoWindow.open(self.map, hotel.marker);
-
             self.animateMarker(hotel);
+            self.currentLocation = hotel.location;
         });
 
     }; // setInfoWin
