@@ -405,14 +405,29 @@ aside .icon-close:hover {
 
 @media only screen and (max-width: 600px) {
     h1 {
-        font-size: 28px;
+        font-size: 26px;
     }
 }
 
 @media only screen and (max-width: 400px) {
     h1 {
-        font-size: 26px;
+        font-size: 22px;
     }
+
+    .gm-style-iw {
+      width: 145px !important;
+
+    }
+
+    .gm-info-container {
+        max-width: 140px;
+    }
+
+    .gm-info-text {
+        max-width: 140px;
+        margin: 8px 0 0 0;
+    }
+
 }
 
 /* SPINNER ANIMATION

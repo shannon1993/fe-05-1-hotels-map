@@ -6,8 +6,9 @@ var app = app || {};
 
 
 /**
- * Callback function for Google Maps (see index.html)
- * This will run after the maps api is loaded.
+ * Callback for Google Maps.
+ * Runs after the maps api is loaded.
+ * @function initApp
  */
 var initApp = function() {
     app.model = new app.Hotel();
@@ -26,6 +27,11 @@ var initApp = function() {
 };
 
 
+/**
+ * Callback for onerror.
+ * If a script resource has an error, then a message is displayed.
+ * @function errorHandler
+ */
 var errorHandler = function(x) {
     var m = document.getElementById('map');
     m.innerHTML = 'There was an error loading the ' + x + ' script.';
@@ -192,6 +198,9 @@ app.ViewModel = function() {
     self.gotoHotel = function(hotel) {
         // Re-center the map on the marker that was clicked
         app.mv.map.setCenter(hotel.location);
+
+        // Pan down 120px (keeps tall infoWindow from getting cutoff)
+        app.mv.map.panBy(0, -120);
 
         app.mv.infoWindow.close();
 
