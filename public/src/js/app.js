@@ -189,7 +189,7 @@ app.ViewModel = function() {
         app.hv.slideOutLeft();
         google.maps.event.trigger(app.mv.map,'resize');
         app.mv.map.setCenter(app.mv.currentLocation);
-        app.mv.map.panBy(0, -120);
+        if(window.screen.height > 400) app.mv.map.panBy(0, -120);
     };
 
     self.noEnter = function(data, event) {
@@ -202,7 +202,8 @@ app.ViewModel = function() {
         app.mv.map.setCenter(hotel.location);
 
         // Pan down 120px (keeps tall infoWindow from getting cutoff)
-        app.mv.map.panBy(0, -120);
+        // Do not pan if in landscape mode
+        if(window.screen.height > 400) app.mv.map.panBy(0, -120);
 
         app.mv.infoWindow.close();
 
