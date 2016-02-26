@@ -8,7 +8,7 @@ var app = app || {};
 /**
  * Callback for Google Maps. Runs after the maps api is loaded.
  *
- * @function initApp
+ * @function app.init
  * @memberof app
  */
 app.init = function() {
@@ -29,8 +29,7 @@ app.init = function() {
 
 
 /**
- * Callback for onerror.
- * If a script resource has an error, then a message is displayed.
+ * Callback for onerror. If a script resource has an error, then a message is displayed.
  *
  * @function app.errorHandler
  * @memberof app
@@ -67,7 +66,7 @@ app.Hotel = function() {
      */
 
     /**
-     * Retrieves the hotels json from Firebase server
+     * Retrieves the hotels json from Firebase server.
      *
      * @function app.Hotel.init
      * @memberof app.Hotel
@@ -158,14 +157,29 @@ app.ViewModel = function() {
         {ratingValue: 2, icon: 'aa', color: 'purple'},
     ]);
 
+    /**
+     * @function app.ViewModel.getRatings
+     * @memberof app.ViewModel
+     * @returns {array} - List of diamond rating value, icon, and color
+     */
     self.getRatings = function() {
         return self.ratings();
     };
 
+    /**
+     * @function app.ViewModel.nameSort
+     * @memberof app.ViewModel
+     * @returns {array} - Alphabetically sorted list of hotel names
+     */
     self.nameSort = function(left, right) {
         return left.name == right.name ? 0 : (left.name < right.name ? -1 : 1);
     };
 
+    /**
+     * @function app.ViewModel.getHotels
+     * @memberof app.ViewModel
+     * @returns {array} - An array of objects for each hotel
+     */
     self.getHotels = ko.computed(function() {
         // Unwrap the observable to return an array
         var hotelArray = app.model.hotels();
@@ -176,24 +190,53 @@ app.ViewModel = function() {
         return hotelArray;
     });
 
+    /**
+     * @function app.ViewModel.getHotelsLength
+     * @memberof app.ViewModel
+     * @returns {number} - The length of the hotels array
+     */
     self.getHotelsLength = ko.computed(function() {
         return app.model.hotels().length;
     });
 
+    /**
+     * @function app.ViewModel.getKeys
+     * @memberof app.ViewModel
+     * @returns {object} - Yelp API keys
+     */
     self.getKeys = function() {
         return app.model.yelp;
     };
 
+    /**
+     * Saves the list of hotels and initializes the map.
+     *
+     * @function app.ViewModel.init
+     * @memberof app.ViewModel
+     */
     self.init = function() {
         self.hotelList(self.getHotels());
         app.mv.initMap();
     };
 
+    /**
+     * Slides in the filter menu and resizes the map.
+     *
+     * @function app.ViewModel.slideIn
+     * @memberof app.ViewModel
+     */
     self.slideIn = function() {
         app.hv.slideInLeft();
         google.maps.event.trigger(app.mv.map,'resize');
     };
 
+    /**
+     * Slides out the filter menu, resizes the map, and centers the map on the marker.
+     * If the screen height is greater than 400px, it will pan the map down 120px to make room for the infoWindow.
+     *
+     * @function app.ViewModel.slideOut
+     * @memberof app.ViewModel
+     */
     self.slideOut = function() {
         app.hv.slideOutLeft();
         google.maps.event.trigger(app.mv.map,'resize');
@@ -201,11 +244,24 @@ app.ViewModel = function() {
         if(window.screen.height > 400) app.mv.map.panBy(0, -120);
     };
 
+    /**
+     * Prevents the page from refreshing when the <ENTER> key is pressed.
+     *
+     * @function app.ViewModel.noEnter
+     * @memberof app.ViewModel
+     * @returns {boolean} - False
+     */
     self.noEnter = function(data, event) {
         // Prevent form submission
         return false;
     };
 
+    /**
+     * Runs when a hotel is selected in the list view.
+     *
+     * @function app.ViewModel.gotoHotel
+     * @memberof app.ViewModel
+     */
     self.gotoHotel = function(hotel) {
         // Re-center the map on the marker that was clicked
         app.mv.map.setCenter(hotel.location);
@@ -220,6 +276,12 @@ app.ViewModel = function() {
         google.maps.event.trigger(hotel.marker, 'click');
     };
 
+    /**
+     * Toggles diamond rating checkbox, and filters hotels displayed by rating.
+     *
+     * @function app.ViewModel.filterRatings
+     * @memberof app.ViewModel
+     */
     self.filterRatings = function(data, event) {
         self.hotelDisplay();
 
@@ -227,14 +289,33 @@ app.ViewModel = function() {
         return true;
     };
 
+    /**
+     * Displays the Diamond Rating Definitions.
+     *
+     * @function app.ViewModel.open
+     * @memberof app.ViewModel
+     */
     self.open = function() {
         app.hv.openInfo();
     };
 
+    /**
+     * Hides the Diamond Rating Definitions.
+     *
+     * @function app.ViewModel.close
+     * @memberof app.ViewModel
+     */
     self.close = function() {
         app.hv.closeInfo();
     };
 
+    /**
+     * Real time filtering of hotels displayed in the list and map.
+     *
+     * @function app.ViewModel.hotelDisplay
+     * @memberof app.ViewModel
+     * @returns {object} - Filtered list of hotels
+     */
     self.hotelDisplay = ko.computed(function() {
         var result = -1;
         var temp = [];
@@ -303,22 +384,52 @@ app.HotelView = function() {
     self.h3 = document.getElementsByTagName('h3');
     self.def = document.getElementById('definitions');
 
+    /**
+     * Updates the class property to slide the menu in.
+     *
+     * @function app.HotelView.slideInLeft
+     * @memberof app.HotelView
+     */
     self.slideInLeft = function() {
         self.slide.className = self.animateIn;
     };
 
+    /**
+     * Updates the class property to slide the menu out.
+     *
+     * @function app.HotelView.slideOutLeft
+     * @memberof app.HotelView
+     */
     self.slideOutLeft = function() {
         self.slide.className = self.animateOut;
     };
 
+    /**
+     * Adds 'block' to display property.
+     *
+     * @function app.HotelView.openInfo
+     * @memberof app.HotelView
+     */
     self.openInfo = function() {
         self.def.style.display = 'block';
     };
 
+    /**
+     * Removes 'block' from display property.
+     *
+     * @function app.HotelView.closeInfo
+     * @memberof app.HotelView
+     */
     self.closeInfo = function() {
         self.def.style.display = '';
     };
 
+    /**
+     * Toggles arrow icon and toggles display of the section under the header.
+     *
+     * @function app.HotelView.toggleDisplay
+     * @memberof app.HotelView
+     */
     self.toggleDisplay = function(headElem, iconClass) {
         if (iconClass != 'icons icon-down') {
             iconClass  = 'icons icon-down';
@@ -335,6 +446,12 @@ app.HotelView = function() {
         return iconClass;
     };
 
+    /**
+     * Updates the class property for the icon inside the header.
+     *
+     * @function app.HotelView.setIcon
+     * @memberof app.HotelView
+     */
     self.setIcon = function(e) {
         var elem;
 
@@ -349,6 +466,12 @@ app.HotelView = function() {
         elem.firstChild.className = self.toggleDisplay(elem, elem.firstChild.className);
     };
 
+    /**
+     * Creates click event listeners for each h3 heading.
+     *
+     * @function app.HotelView.init
+     * @memberof app.HotelView
+     */
     self.init = function() {
         var i = 0;
         var len = self.h3.length;
@@ -394,9 +517,9 @@ app.MapView = function() {
     self.markerColors = ['pink', 'blue', 'purple', 'green', 'yellow', 'red'];
 
     /**
-     * Displays a Google Map
-     * @function
-     * @name app.MapView.init
+     * Displays a Google Map and adds resize event listeners.
+     *
+     * @function app.MapView.init
      * @memberof app.MapView
      * @see {@link https://developers.google.com/maps/documentation/javascript/reference}
      */
@@ -422,6 +545,12 @@ app.MapView = function() {
         });
     }; // initMap
 
+    /**
+     * Creates map markers.
+     *
+     * @function app.MapView.createMarkers
+     * @memberof app.MapView
+     */
     self.createMarkers = function() {
         var c = 0;
         var hotel = {};
@@ -448,6 +577,12 @@ app.MapView = function() {
         } // for
     }; // createMarkers
 
+    /**
+     * Sets the animation and icon properties for the map marker.
+     *
+     * @function app.MapView.animateMarker
+     * @memberof app.MapView
+     */
     self.animateMarker = function(hotel) {
         // Animate the marker
         hotel.marker.setAnimation(google.maps.Animation.BOUNCE);
@@ -462,6 +597,12 @@ app.MapView = function() {
         }, 2100);
     }; // animateMarker
 
+    /**
+     * Gets the content or reads already set content for the infoWindow. Sets currentLocation, and creates a click event listener.
+     *
+     * @function app.MapView.setInfoWin
+     * @memberof app.MapView
+     */
     self.setInfoWin = function(hotel) {
         // Open the infoWindow when a marker is clicked
         google.maps.event.addListener(hotel.marker, 'click', function() {
@@ -479,6 +620,12 @@ app.MapView = function() {
 
     }; // setInfoWin
 
+    /**
+     * Calls the Yelp API via JSONP AJAX and sets the content of the infoWindow.
+     *
+     * @function app.MapView.getContent
+     * @memberof app.MapView
+     */
     self.getContent = function(hotel) {
         /**
          * Generates a random number and returns it as a string for OAuthentication
@@ -526,6 +673,13 @@ app.MapView = function() {
 
     }; // getContent
 
+    /**
+     * Matches the icon to diamond rating and formats html for the hotel image and review snippet.
+     *
+     * @function app.MapView.getTemplate
+     * @memberof app.MapView
+     * @returns {string} - HTML containing hotel name, diamond rating, image, and review.
+     */
     self.getTemplate = function(name, diamonds, image, review, url) {
         var i = 0;
         var d = app.vm.getRatings();
@@ -560,10 +714,12 @@ app.MapView = function() {
 /**
  * jsonp.js, (c) Przemek Sobstel 2012, License: MIT
  * {@link  https://github.com/sobstel/jsonp.js | jsonp.js}
- * Custom modificatins by me: Add data option to pass parameters
+ *
+ * Changes from original: Added data option to pass parameters.
+ *
  * @param  {string} - url
- * @param  {object} - parameters
- * @return {string} - json
+ * @param  {object} - options
+ * @return {object} - json
  */
 var $jsonp = (function(){
   var that = {};
