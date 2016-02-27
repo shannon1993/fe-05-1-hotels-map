@@ -635,6 +635,8 @@ app.MapView = function() {
           return (Math.floor(Math.random() * 1e12).toString());
         }
 
+        // Proof of concept of how to connect to an oAuth API with JS
+        // For real world use you'd want a backend that hides your keys
         var yelpUrl = 'http://api.yelp.com/v2/business/' + hotel.id;
         var auth = app.vm.getKeys();
         var parameters = {
