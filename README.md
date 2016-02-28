@@ -12,9 +12,13 @@ Web app to display a selection of Las Vegas hotels inspected and rated by [AAA](
 2. Open the `index.html` in either the `src` or `dist` folders
 
 ## How to re-build
-1.
-2.
-3.
+1. Requires [Node.js](https://nodejs.org/en/download/) and [Gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
+2. Navigate to the root of the project directory (where the `gulpfile.js` is located)
+3. In your terminal enter the command: `npm install`, this will install all modules listed as dependencies in `package.json`
+4. Enter the command `gulp clean` to delete everything in the `dist` folder.
+  * If you want to preview what files will be deleted, enter the command `gulp cleanDryRun` instead.
+5. Next enter the command `gulp` and the project will be built in the `dist` folder.
+  * You can review differences by comparing the `src` and `dist` folder.
 
 ## Documentation
 
