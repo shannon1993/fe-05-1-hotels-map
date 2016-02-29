@@ -606,16 +606,17 @@ app.MapView = function() {
     self.setInfoWin = function(hotel) {
         // Open the infoWindow when a marker is clicked
         google.maps.event.addListener(hotel.marker, 'click', function() {
-            if(!hotel.content) {
-                self.infoWindow.setContent(self.preload);
-                self.getContent(hotel);
-            }
-            else
-                self.infoWindow.setContent(hotel.content);
+            // if(!hotel.content) {
+            //     self.infoWindow.setContent(self.preload);
+            //     self.getContent(hotel);
+            // }
+            // else
+            //     self.infoWindow.setContent(hotel.content);
 
             self.infoWindow.open(self.map, hotel.marker);
             self.animateMarker(hotel);
             self.currentLocation = hotel.location;
+            self.getHotelTweets('MGMGrand');
         });
 
     }; // setInfoWin
@@ -710,6 +711,89 @@ app.MapView = function() {
         return template;
     }; // getTemplate
 
+    self.getHotelTweets = function(twitter) {
+        console.log('getHotelTweets');
+        function CORSRequest(method, url, data) {
+            var xhr = new XMLHttpRequest();
+            if (method === 'GET' && data) {
+                var query = [];
+                for (var key in data) {
+                    if (!data.hasOwnProperty(key)) {
+                        continue;
+                    }
+                    query.push(key + '=' + data[key]);
+                }
+                url += '?' + query.join('&');
+            }
+            if ("withCredentials" in xhr) {
+                // XHR for Chrome/Firefox/Opera/Safari.
+                xhr.open(method, url, true);
+            } else if (typeof XDomainRequest != "undefined") {
+                // XDomainRequest for IE.
+                xhr = new XDomainRequest();
+                xhr.open(method, url);
+            } else {
+                // CORS not supported.
+                xhr = null;
+            }
+            return xhr;
+        }
+
+        var twitter_api = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+        var bearer_token = 'AAAAAAAAAAAAAAAAAAAAAAtztwAAAAAA9%2FOHDhbNOhQ7xiWXPxiOdejku7Y%3D5FzZwG9BYY6iwrwGaaiEDPJEDOBhDjASrJ4bEqNGKWIAPGb43t';
+        var data = {
+            "screen_name": twitter,
+            "exclude_replies": true,
+            "count": 1,
+            "callback" : "cb"
+        };
+        var xhr = new CORSRequest('GET', twitter_api, data);
+
+        if(!xhr) {
+            console.log('CORS not supported');
+        } else {
+            xhr.onload = function(e) {
+               var response = JSON.parse(e.target.response);
+               console.log('xhr.onload response:');
+               console.dir(response);
+            }; // onload
+
+            xhr.error = function() {
+                console.log('xhr.error');
+
+            }; // onerror
+
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.setRequestHeader("Authorization", "Bearer " + bearer_token);
+            xhr.send();
+        }
+
+        // var req = new XMLHttpRequest();
+        // req.open("GET", "https://api.twitter.com/1.1/search/tweets.json?screen_name=" + twitter +
+        //                 "&count=1");
+        // req.setRequestHeader("Authorization", "Bearer " + bearer_token);
+        // req.onreadystatechange = function() {
+        //     var status = req.readyState;
+        //     if (status === XMLHttpRequest.DONE) {
+        //         var objectArray = JSON.parse(req.responseText);
+        //         if (objectArray.errors !== undefined)
+        //             console.log("Error fetching tweets: " + objectArray.errors[0].message);
+        //         else {
+        //             for (var key in objectArray.statuses) {
+        //                 var jsonObject = objectArray.statuses[key];
+        //                 console.dir(jsonObject);
+        //             } // for
+        //         } // else
+
+        //     } // if
+
+        // }; // onreadystatechange
+
+        // req.send();
+
+    }; // getHotelTweets
+
 }; // MapView
 
 
@@ -761,3 +845,35 @@ var $jsonp = (function(){
 
   return that;
 })();
+
+
+OAuth.initialize('FrzYC3o5cNjVMmetN9hGweESJkU');
+
+window.twitter_connect = function() {
+    OAuth.redirect('twitter', document.location.pathname);
+};
+
+OAuth.callback(function(e,r) {
+    if(e) return console.error(e);
+    var str = r.oauth_token + ' / ' + r.oauth_token_secret;
+    //document.getElementById('result').innerHTML = str;
+    console.log('OAuth.callback');
+    console.log(str);
+});
+
+// OAuth.popup('twitter')
+// .done(function(result) { // OAuth worked as expected
+//     twitterObj= result;
+//     twitterObj.me()
+//     .done(function (response) { // Twitter user exists
+//         console.log('You are on Twitter!');
+//         console.log('Name: ', response.name);
+//         console.log(response.raw);
+//     })
+//     .fail(function (err) { // Twitter user wasn't found
+//         console.log(err);
+//     });
+// })
+// .fail(function (err) { // OAuth didn't work
+//     console.log(err);
+// });
