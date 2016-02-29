@@ -98,6 +98,7 @@ app.Hotel = function() {
             for (i; i < length; i++) {
                 hotel = hotelsJSON[i];
                 hotel.content = null;
+                hotel.tweets = null;
 
                 // Save each hotel into a Knockout Observable Array
                 self.hotels.push(hotel);
@@ -598,7 +599,9 @@ app.MapView = function() {
     }; // animateMarker
 
     /**
-     * Gets the content or reads already set content for the infoWindow. Sets currentLocation, and creates a click event listener.
+     * Gets the content or reads already set content for the infoWindow.
+     * Sets currentLocation, and creates a click event listener.
+     * Gets the hotel's recent tweets and inserts them into the page.
      *
      * @function app.MapView.setInfoWin
      * @memberof app.MapView
@@ -616,6 +619,7 @@ app.MapView = function() {
             self.infoWindow.open(self.map, hotel.marker);
             self.animateMarker(hotel);
             self.currentLocation = hotel.location;
+            if(!hotel.tweets) self.getTweets(hotel);
         });
 
     }; // setInfoWin
@@ -700,7 +704,7 @@ app.MapView = function() {
         template = '<h4>' + name + '</h4>';
         template += '<i class="diamonds small">' + icon + '</i>';
         template += '<div class="gm-info-container">';
-        template += '  <div class="gm-info-image"><img src="' + image + '"></div>';
+        template += '  <div class="gm-info-image"><img src="' + image + '" alt="' + name + '"></div>';
         template += '  <div class="gm-info-text">';
         template +=    '<img src="images/yelp_reviews.png" alt="Yelp Reviews"><br>';
         template +=    review + ' <a href="' + url + '">read more</a>';
@@ -710,54 +714,32 @@ app.MapView = function() {
         return template;
     }; // getTemplate
 
+    self.getTweets = function(hotel) {
+        var twitter_api_wrapper = 'http://topwidget.co/twitter/api.php';
+        var data = {
+            "screen_name": hotel.twitter,
+            "count": 3
+        };
+
+        // url, method, data, success, fail
+        AJAX.request(twitter_api_wrapper, 'GET', data, function(response) {
+            var tweets = '@' + hotel.twitter + ': ';
+            var length = response.length;
+            var t = 0;
+
+            for(t; t < length; t++) {
+                tweets += response[t].text;
+                if(t !== length - 1) tweets += ' | ';
+            } // for
+
+            hotel.tweets = tweets;
+            document.getElementById('twitter').innerHTML = hotel.tweets;
+
+        },function(){
+            hotel.tweets = null;
+            if(window.console) console.log("AJAX request failed.");
+        });
+
+    }; // getTweets
+
 }; // MapView
-
-
-/**
- * jsonp.js, (c) Przemek Sobstel 2012, License: MIT
- * {@link  https://github.com/sobstel/jsonp.js | jsonp.js}
- *
- * Changes from original: Added data option to pass parameters.
- *
- * @param  {string} - url
- * @param  {object} - options
- * @return {object} - json
- */
-var $jsonp = (function(){
-  var that = {};
-
-  that.send = function(src, opt) {
-    var options = opt || {},
-      callback_name = options.callbackName || 'callback',
-      on_success = options.onSuccess || function(){},
-      on_timeout = options.onTimeout || function(){},
-      timeout = options.timeout || 10,
-      params = options.data || {};
-
-    var query = "?";
-    for (var key in params) {
-        if (params.hasOwnProperty(key)) {
-            query += encodeURIComponent(key) + "=" + encodeURIComponent(params[key]) + "&";
-        }
-    }
-
-    var timeout_trigger = window.setTimeout(function(){
-      window[callback_name] = function(){};
-      on_timeout();
-    }, timeout * 1000);
-
-    window[callback_name] = function(data){
-      window.clearTimeout(timeout_trigger);
-      on_success(data);
-    };
-
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.async = true;
-    script.src = src + query;
-
-    document.getElementsByTagName('head')[0].appendChild(script);
-  };
-
-  return that;
-})();
