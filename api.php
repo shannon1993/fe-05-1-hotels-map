@@ -49,7 +49,5 @@ if($curlErrno){
 // Close the Curl Session
 curl_close($ch);
 
-file_put_contents('output.txt', $json);
-
 echo $json;
 ?>
