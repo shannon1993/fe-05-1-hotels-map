@@ -11,7 +11,15 @@
 
     <header>
       <h1>Las Vegas Diamond Hotels</h1>
-      <nav class="top"><i data-bind="click: slideIn" class="icons icon-menu big"></i></nav>
+      <nav class="top">
+        <i data-bind="click: slideIn" class="icons icon-menu big"></i>
+        <!-- Twitter Ticker -->
+        <div id="tickerContainer">
+          <div id="ticker">
+            <ul id="twitter"></ul>
+          </div>
+        </div>
+      </nav>
     </header>
 
     <main>
@@ -72,7 +80,7 @@
     </main>
 
     <script src="js/app.min.js"></script>
-    <script src="js/lib/oauth-signature.min.js" onerror="app.errorHandler('oauth')"></script>>
+    <script src="js/lib/oauth-signature.min.js" onerror="app.errorHandler('oauth')"></script>
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js" onerror="app.errorHandler('firebase')"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js" onerror="app.errorHandler('knockout')"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpx555oZLZBIBlnLV6dLMY2ORJM6ULQZ0&callback=app.init" onerror="app.errorHandler('googlemap')"></script>

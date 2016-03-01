@@ -126,6 +126,7 @@ app.Hotel = function() {
             for (i; i &lt; length; i++) {
                 hotel = hotelsJSON[i];
                 hotel.content = null;
+                hotel.tweets = null;
 
                 // Save each hotel into a Knockout Observable Array
                 self.hotels.push(hotel);
@@ -351,6 +352,9 @@ app.ViewModel = function() {
         var rlength = self.ratingsChecked().length;
         var diamond = 0;
         var match = -1;
+
+        // Reset the twitter ticker
+        document.getElementById('twitter').innerHTML = '';
 
         // Copy the original hotel list array
         self.filterList(self.hotelList());
@@ -626,7 +630,9 @@ app.MapView = function() {
     }; // animateMarker
 
     /**
-     * Gets the content or reads already set content for the infoWindow. Sets currentLocation, and creates a click event listener.
+     * Gets the content or reads already set content for the infoWindow.
+     * Sets currentLocation, and creates a click event listener.
+     * Gets the hotel's recent tweets and inserts them into the page.
      *
      * @function app.MapView.setInfoWin
      * @memberof app.MapView
@@ -644,6 +650,11 @@ app.MapView = function() {
             self.infoWindow.open(self.map, hotel.marker);
             self.animateMarker(hotel);
             self.currentLocation = hotel.location;
+
+            if(!hotel.tweets)
+                self.getTweets(hotel);
+            else
+                self.displayTweets(hotel.tweets);
         });
 
     }; // setInfoWin
@@ -728,7 +739,7 @@ app.MapView = function() {
         template = '&lt;h4>' + name + '&lt;/h4>';
         template += '&lt;i class="diamonds small">' + icon + '&lt;/i>';
         template += '&lt;div class="gm-info-container">';
-        template += '  &lt;div class="gm-info-image">&lt;img src="' + image + '">&lt;/div>';
+        template += '  &lt;div class="gm-info-image">&lt;img src="' + image + '" alt="' + name + '">&lt;/div>';
         template += '  &lt;div class="gm-info-text">';
         template +=    '&lt;img src="images/yelp_reviews.png" alt="Yelp Reviews">&lt;br>';
         template +=    review + ' &lt;a href="' + url + '">read more&lt;/a>';
@@ -738,57 +749,50 @@ app.MapView = function() {
         return template;
     }; // getTemplate
 
-}; // MapView
+    self.getTweets = function(hotel) {
+        var twitter_api_wrapper = 'http://topwidget.co/twitter/api.php';
+        var data = {
+            "screen_name": hotel.twitter,
+            "count": 5
+        };
 
+        // url, method, data, success, fail
+        AJAX.request(twitter_api_wrapper, 'GET', data, function(response) {
+            var tweets = '';
+            var length = response.length;
+            var t = 0;
+            var txt = '';
+            var img = '';
+            var id = '';
+            var url = 'https://twitter.com/' + hotel.twitter + '/status/';
 
-/**
- * jsonp.js, (c) Przemek Sobstel 2012, License: MIT
- * {@link  https://github.com/sobstel/jsonp.js | jsonp.js}
- *
- * Changes from original: Added data option to pass parameters.
- *
- * @param  {string} - url
- * @param  {object} - options
- * @return {object} - json
- */
-var $jsonp = (function(){
-  var that = {};
+            for(t; t &lt; length; t++) {
+                id = response[t].id_str;
+                txt = response[t].text;
+                img = response[t].user.profile_image_url;
+                tweets += '&lt;li class="tweet">';
+                tweets += '&lt;a href="' + url + id + '" title="@' + hotel.twitter + '" target="_blank">';
+                tweets += '&lt;img src="' + img + '" alt="@' + hotel.twitter + '"> ';
+                tweets += txt + '&lt;/a>';
+                tweets += '&lt;/li>';
+            } // for
 
-  that.send = function(src, opt) {
-    var options = opt || {},
-      callback_name = options.callbackName || 'callback',
-      on_success = options.onSuccess || function(){},
-      on_timeout = options.onTimeout || function(){},
-      timeout = options.timeout || 10,
-      params = options.data || {};
+            hotel.tweets = tweets;
+            self.displayTweets(hotel.tweets);
 
-    var query = "?";
-    for (var key in params) {
-        if (params.hasOwnProperty(key)) {
-            query += encodeURIComponent(key) + "=" + encodeURIComponent(params[key]) + "&amp;";
-        }
-    }
+        },function(){
+            hotel.tweets = null;
+            if(window.console) console.log("AJAX request failed.");
+        });
 
-    var timeout_trigger = window.setTimeout(function(){
-      window[callback_name] = function(){};
-      on_timeout();
-    }, timeout * 1000);
+    }; // getTweets
 
-    window[callback_name] = function(data){
-      window.clearTimeout(timeout_trigger);
-      on_success(data);
-    };
+    self.displayTweets = function(tweets) {
+        var twitter = document.getElementById('twitter');
+        twitter.innerHTML = tweets;
+    }; // displayTweets
 
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.async = true;
-    script.src = src + query;
-
-    document.getElementsByTagName('head')[0].appendChild(script);
-  };
-
-  return that;
-})();</code></pre>
+}; // MapView</code></pre>
         </article>
     </section>
 
@@ -798,13 +802,13 @@ var $jsonp = (function(){
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="app.Hotel.html">Hotel</a></li><li><a href="app.HotelView.html">HotelView</a></li><li><a href="app.MapView.html">MapView</a></li><li><a href="app.ViewModel.html">ViewModel</a></li></ul><h3>Namespaces</h3><ul><li><a href="app.html">app</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$jsonp">$jsonp</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="app.Hotel.html">Hotel</a></li><li><a href="app.HotelView.html">HotelView</a></li><li><a href="app.MapView.html">MapView</a></li><li><a href="app.ViewModel.html">ViewModel</a></li></ul><h3>Namespaces</h3><ul><li><a href="app.html">app</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sat Feb 27 2016 18:48:07 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 29 2016 22:40:19 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

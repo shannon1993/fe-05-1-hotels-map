@@ -201,7 +201,8 @@ app.Hotel = <span class="hljs-function"><span class="hljs-keyword">function</spa
             <div class="content"><div class='highlight'><pre>            length = hotelsJSON.length;
             <span class="hljs-keyword">for</span> (i; i &lt; length; i++) {
                 hotel = hotelsJSON[i];
-                hotel.content = <span class="hljs-literal">null</span>;</pre></div></div>
+                hotel.content = <span class="hljs-literal">null</span>;
+                hotel.tweets = <span class="hljs-literal">null</span>;</pre></div></div>
             
         </li>
         
@@ -587,6 +588,21 @@ Do not pan if in landscape mode</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
+              <p>Reset the twitter ticker</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'twitter'</span>).innerHTML = <span class="hljs-string">''</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
               <p>Copy the original hotel list array</p>
 
             </div>
@@ -598,11 +614,11 @@ Do not pan if in landscape mode</p>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>Make all the hotel markers visible</p>
 
@@ -613,11 +629,11 @@ Do not pan if in landscape mode</p>
         </li>
         
         
-        <li id="section-22">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Prevents error if marker is not set yet</p>
 
@@ -629,11 +645,11 @@ Do not pan if in landscape mode</p>
         </li>
         
         
-        <li id="section-23">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>Return all the hotels</p>
 
@@ -646,11 +662,11 @@ Do not pan if in landscape mode</p>
         </li>
         
         
-        <li id="section-24">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Check if the query matches with the hotel name</p>
 
@@ -662,11 +678,11 @@ Do not pan if in landscape mode</p>
         </li>
         
         
-        <li id="section-25">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Ratings check</p>
 
@@ -689,11 +705,11 @@ Do not pan if in landscape mode</p>
         </li>
         
         
-        <li id="section-26">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>Save the filtered hotels back to the ko observable array</p>
 
@@ -778,11 +794,11 @@ app.HotelView = <span class="hljs-function"><span class="hljs-keyword">function<
         </li>
         
         
-        <li id="section-27">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>Show the section under the heading</p>
 
@@ -795,11 +811,11 @@ app.HotelView = <span class="hljs-function"><span class="hljs-keyword">function<
         </li>
         
         
-        <li id="section-28">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>Hide the section under the heading</p>
 
@@ -823,11 +839,11 @@ app.HotelView = <span class="hljs-function"><span class="hljs-keyword">function<
         </li>
         
         
-        <li id="section-29">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>Fix for when the triangle icon is clicked inside the h3</p>
 
@@ -840,11 +856,11 @@ app.HotelView = <span class="hljs-function"><span class="hljs-keyword">function<
         </li>
         
         
-        <li id="section-30">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <p>Traverse up the DOM one level</p>
 
@@ -871,11 +887,11 @@ app.HotelView = <span class="hljs-function"><span class="hljs-keyword">function<
         </li>
         
         
-        <li id="section-31">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <p>Add a click event for each h3 heading</p>
 
@@ -918,11 +934,11 @@ app.MapView = <span class="hljs-function"><span class="hljs-keyword">function</s
         </li>
         
         
-        <li id="section-32">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <p>Source: <a href="https://sites.google.com/site/gmapsdevelopment/">https://sites.google.com/site/gmapsdevelopment/</a></p>
 
@@ -943,11 +959,11 @@ app.MapView = <span class="hljs-function"><span class="hljs-keyword">function</s
         </li>
         
         
-        <li id="section-33">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>Create the map</p>
 
@@ -958,11 +974,11 @@ app.MapView = <span class="hljs-function"><span class="hljs-keyword">function</s
         </li>
         
         
-        <li id="section-34">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <p>Create the info window that will be re-used by each marker</p>
 
@@ -973,11 +989,11 @@ app.MapView = <span class="hljs-function"><span class="hljs-keyword">function</s
         </li>
         
         
-        <li id="section-35">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>Create the markers</p>
 
@@ -988,11 +1004,11 @@ app.MapView = <span class="hljs-function"><span class="hljs-keyword">function</s
         </li>
         
         
-        <li id="section-36">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <p>Trigger map resize if the window changes size</p>
 
@@ -1005,11 +1021,11 @@ app.MapView = <span class="hljs-function"><span class="hljs-keyword">function</s
         </li>
         
         
-        <li id="section-37">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>Update center of the map on resize</p>
 
@@ -1039,11 +1055,11 @@ app.MapView = <span class="hljs-function"><span class="hljs-keyword">function</s
         </li>
         
         
-        <li id="section-38">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Marker color corresponds to diamond rating</p>
 
@@ -1054,11 +1070,11 @@ app.MapView = <span class="hljs-function"><span class="hljs-keyword">function</s
         </li>
         
         
-        <li id="section-39">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <p>Add hotel markers to the map</p>
 
@@ -1088,11 +1104,11 @@ app.MapView = <span class="hljs-function"><span class="hljs-keyword">function</s
         </li>
         
         
-        <li id="section-40">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p>Animate the marker</p>
 
@@ -1103,11 +1119,11 @@ app.MapView = <span class="hljs-function"><span class="hljs-keyword">function</s
         </li>
         
         
-        <li id="section-41">
+        <li id="section-42">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-41">&#182;</a>
+                <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
               <p>Display the dot version of the marker</p>
 
@@ -1118,11 +1134,11 @@ app.MapView = <span class="hljs-function"><span class="hljs-keyword">function</s
         </li>
         
         
-        <li id="section-42">
+        <li id="section-43">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-42">&#182;</a>
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               <p>Animate the marker for 2.1 seconds</p>
 
@@ -1135,7 +1151,9 @@ app.MapView = <span class="hljs-function"><span class="hljs-keyword">function</s
     }; <span class="hljs-comment">// animateMarker</span>
 
     <span class="hljs-comment">/**
-     * Gets the content or reads already set content for the infoWindow. Sets currentLocation, and creates a click event listener.
+     * Gets the content or reads already set content for the infoWindow.
+     * Sets currentLocation, and creates a click event listener.
+     * Gets the hotel's recent tweets and inserts them into the page.
      *
      * @function app.MapView.setInfoWin
      * @memberof app.MapView
@@ -1145,11 +1163,11 @@ app.MapView = <span class="hljs-function"><span class="hljs-keyword">function</s
         </li>
         
         
-        <li id="section-43">
+        <li id="section-44">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-43">&#182;</a>
+                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <p>Open the infoWindow when a marker is clicked</p>
 
@@ -1166,6 +1184,11 @@ app.MapView = <span class="hljs-function"><span class="hljs-keyword">function</s
             self.infoWindow.open(self.map, hotel.marker);
             self.animateMarker(hotel);
             self.currentLocation = hotel.location;
+
+            <span class="hljs-keyword">if</span>(!hotel.tweets)
+                self.getTweets(hotel);
+            <span class="hljs-keyword">else</span>
+                self.displayTweets(hotel.tweets);
         });
 
     }; <span class="hljs-comment">// setInfoWin</span>
@@ -1188,11 +1211,11 @@ app.MapView = <span class="hljs-function"><span class="hljs-keyword">function</s
         </li>
         
         
-        <li id="section-44">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-44">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <p>Proof of concept of how to connect to an oAuth API with JS
 For real world use you’d want a backend that hides your keys</p>
@@ -1254,11 +1277,11 @@ For real world use you’d want a backend that hides your keys</p>
         </li>
         
         
-        <li id="section-45">
+        <li id="section-46">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-45">&#182;</a>
+                <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
               <p>Match the diamond rating to the icon text</p>
 
@@ -1274,7 +1297,7 @@ For real world use you’d want a backend that hides your keys</p>
         template = <span class="hljs-string">'&lt;h4&gt;'</span> + name + <span class="hljs-string">'&lt;/h4&gt;'</span>;
         template += <span class="hljs-string">'&lt;i class="diamonds small"&gt;'</span> + icon + <span class="hljs-string">'&lt;/i&gt;'</span>;
         template += <span class="hljs-string">'&lt;div class="gm-info-container"&gt;'</span>;
-        template += <span class="hljs-string">'  &lt;div class="gm-info-image"&gt;&lt;img src="'</span> + image + <span class="hljs-string">'"&gt;&lt;/div&gt;'</span>;
+        template += <span class="hljs-string">'  &lt;div class="gm-info-image"&gt;&lt;img src="'</span> + image + <span class="hljs-string">'" alt="'</span> + name + <span class="hljs-string">'"&gt;&lt;/div&gt;'</span>;
         template += <span class="hljs-string">'  &lt;div class="gm-info-text"&gt;'</span>;
         template +=    <span class="hljs-string">'&lt;img src="images/yelp_reviews.png" alt="Yelp Reviews"&gt;&lt;br&gt;'</span>;
         template +=    review + <span class="hljs-string">' &lt;a href="'</span> + url + <span class="hljs-string">'"&gt;read more&lt;/a&gt;'</span>;
@@ -1284,57 +1307,62 @@ For real world use you’d want a backend that hides your keys</p>
         <span class="hljs-keyword">return</span> template;
     }; <span class="hljs-comment">// getTemplate</span>
 
-}; <span class="hljs-comment">// MapView</span>
+    self.getTweets = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">hotel</span>) </span>{
+        <span class="hljs-keyword">var</span> twitter_api_wrapper = <span class="hljs-string">'http://topwidget.co/twitter/api.php'</span>;
+        <span class="hljs-keyword">var</span> data = {
+            <span class="hljs-string">"screen_name"</span>: hotel.twitter,
+            <span class="hljs-string">"count"</span>: <span class="hljs-number">5</span>
+        };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-47">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-47">&#182;</a>
+              </div>
+              <p>url, method, data, success, fail</p>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        AJAX.request(twitter_api_wrapper, <span class="hljs-string">'GET'</span>, data, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">response</span>) </span>{
+            <span class="hljs-keyword">var</span> tweets = <span class="hljs-string">''</span>;
+            <span class="hljs-keyword">var</span> length = response.length;
+            <span class="hljs-keyword">var</span> t = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">var</span> txt = <span class="hljs-string">''</span>;
+            <span class="hljs-keyword">var</span> img = <span class="hljs-string">''</span>;
+            <span class="hljs-keyword">var</span> id = <span class="hljs-string">''</span>;
+            <span class="hljs-keyword">var</span> url = <span class="hljs-string">'https://twitter.com/'</span> + hotel.twitter + <span class="hljs-string">'/status/'</span>;
 
-<span class="hljs-comment">/**
- * jsonp.js, (c) Przemek Sobstel 2012, License: MIT
- * {@link  https://github.com/sobstel/jsonp.js | jsonp.js}
- *
- * Changes from original: Added data option to pass parameters.
- *
- * @param  {string} - url
- * @param  {object} - options
- * @return {object} - json
- */</span>
-<span class="hljs-keyword">var</span> $jsonp = (<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-  <span class="hljs-keyword">var</span> that = {};
+            <span class="hljs-keyword">for</span>(t; t &lt; length; t++) {
+                id = response[t].id_str;
+                txt = response[t].text;
+                img = response[t].user.profile_image_url;
+                tweets += <span class="hljs-string">'&lt;li class="tweet"&gt;'</span>;
+                tweets += <span class="hljs-string">'&lt;a href="'</span> + url + id + <span class="hljs-string">'" title="@'</span> + hotel.twitter + <span class="hljs-string">'" target="_blank"&gt;'</span>;
+                tweets += <span class="hljs-string">'&lt;img src="'</span> + img + <span class="hljs-string">'" alt="@'</span> + hotel.twitter + <span class="hljs-string">'"&gt; '</span>;
+                tweets += txt + <span class="hljs-string">'&lt;/a&gt;'</span>;
+                tweets += <span class="hljs-string">'&lt;/li&gt;'</span>;
+            } <span class="hljs-comment">// for</span>
 
-  that.send = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">src, opt</span>) </span>{
-    <span class="hljs-keyword">var</span> options = opt || {},
-      callback_name = options.callbackName || <span class="hljs-string">'callback'</span>,
-      on_success = options.onSuccess || <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{},
-      on_timeout = options.onTimeout || <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{},
-      timeout = options.timeout || <span class="hljs-number">10</span>,
-      params = options.data || {};
+            hotel.tweets = tweets;
+            self.displayTweets(hotel.tweets);
 
-    <span class="hljs-keyword">var</span> query = <span class="hljs-string">"?"</span>;
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> params) {
-        <span class="hljs-keyword">if</span> (params.hasOwnProperty(key)) {
-            query += <span class="hljs-built_in">encodeURIComponent</span>(key) + <span class="hljs-string">"="</span> + <span class="hljs-built_in">encodeURIComponent</span>(params[key]) + <span class="hljs-string">"&amp;"</span>;
-        }
-    }
+        },<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+            hotel.tweets = <span class="hljs-literal">null</span>;
+            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">window</span>.console) <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"AJAX request failed."</span>);
+        });
 
-    <span class="hljs-keyword">var</span> timeout_trigger = <span class="hljs-built_in">window</span>.setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-      <span class="hljs-built_in">window</span>[callback_name] = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{};
-      on_timeout();
-    }, timeout * <span class="hljs-number">1000</span>);
+    }; <span class="hljs-comment">// getTweets</span>
 
-    <span class="hljs-built_in">window</span>[callback_name] = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>)</span>{
-      <span class="hljs-built_in">window</span>.clearTimeout(timeout_trigger);
-      on_success(data);
-    };
+    self.displayTweets = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">tweets</span>) </span>{
+        <span class="hljs-keyword">var</span> twitter = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'twitter'</span>);
+        twitter.innerHTML = tweets;
+    }; <span class="hljs-comment">// displayTweets</span>
 
-    <span class="hljs-keyword">var</span> script = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'script'</span>);
-    script.type = <span class="hljs-string">'text/javascript'</span>;
-    script.async = <span class="hljs-literal">true</span>;
-    script.src = src + query;
-
-    <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">'head'</span>)[<span class="hljs-number">0</span>].appendChild(script);
-  };
-
-  <span class="hljs-keyword">return</span> that;
-})();</pre></div></div>
+}; <span class="hljs-comment">// MapView</span></pre></div></div>
             
         </li>
         
