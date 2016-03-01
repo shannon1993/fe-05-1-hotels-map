@@ -183,17 +183,40 @@ nav .icon-menu {
     -webkit-flex-shrink: 0;
         -ms-flex-negative: 0;
             flex-shrink: 0;
-    padding-left: 20px;
+    padding: 0 24px 0 20px;
 }
 
-nav span {
+nav ul {
     -webkit-box-flex: 1;
     -webkit-flex-grow: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;
     -webkit-flex-shrink: 0;
         -ms-flex-negative: 0;
-            flex-shrink: 0;;
+            flex-shrink: 0;
+}
+
+nav li {
+    list-style-type: none;
+    display: inline;
+    font-size: 14px;
+}
+
+nav img {
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+    padding: 0 8px 0 25px;
+}
+
+nav a {
+    color: #204f26;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: #ddd;
+    text-decoration: underline;
 }
 
 main {
@@ -266,17 +289,11 @@ aside .icon-close:hover {
 .no-overlay {
     /* Places list view next to map */
     position: relative;
-
-    /* Stretches height to bottom of page, minus top value */
-    height: calc(100% - 70px);
 }
 
 .overlay {
     /* Overlays list view over the map */
     position: absolute;
-
-    /* Shrinks height to fit container */
-    height: auto;
 }
 
 .hidden {
@@ -470,7 +487,6 @@ aside .icon-close:hover {
     /* Screen is smaller, so always overlay */
     .no-overlay {
         position: absolute;
-        height: auto;
     }
 }
 
@@ -564,4 +580,30 @@ aside .icon-close:hover {
     -webkit-transform: rotate(359deg);
             transform: rotate(359deg);
   }
+}
+
+/* TICKER ANIMATION
+----------------------------------*/
+#tickerContainer {
+    overflow: hidden;
+}
+
+#tickerContainer:hover #ticker {
+    -webkit-animation-play-state: paused;
+}
+
+#ticker {
+    white-space: nowrap;
+    -webkit-animation: scroll_tweets 50s linear infinite;
+            animation: scroll_tweets 50s linear infinite;
+}
+
+@-webkit-keyframes scroll_tweets {
+    0% {
+        -webkit-transform: translate3d(100%, 0, 0);
+    }
+    100% {
+        -webkit-transform: translate3d(-250%, 0, 0);
+    }
+
 }

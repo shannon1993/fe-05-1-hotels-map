@@ -325,6 +325,10 @@ app.ViewModel = function() {
         var diamond = 0;
         var match = -1;
 
+        // Reset the twitter ticker
+        document.getElementById('twitter').innerHTML = '';
+        document.getElementById('twitter').className = '';
+
         // Copy the original hotel list array
         self.filterList(self.hotelList());
 
@@ -619,7 +623,11 @@ app.MapView = function() {
             self.infoWindow.open(self.map, hotel.marker);
             self.animateMarker(hotel);
             self.currentLocation = hotel.location;
-            if(!hotel.tweets) self.getTweets(hotel);
+
+            if(!hotel.tweets)
+                self.getTweets(hotel);
+            else
+                self.displayTweets(hotel.tweets);
         });
 
     }; // setInfoWin
@@ -718,22 +726,32 @@ app.MapView = function() {
         var twitter_api_wrapper = 'http://topwidget.co/twitter/api.php';
         var data = {
             "screen_name": hotel.twitter,
-            "count": 3
+            "count": 5
         };
 
         // url, method, data, success, fail
         AJAX.request(twitter_api_wrapper, 'GET', data, function(response) {
-            var tweets = '@' + hotel.twitter + ': ';
+            var tweets = '';
             var length = response.length;
             var t = 0;
+            var txt = '';
+            var img = '';
+            var id = '';
+            var url = 'https://twitter.com/' + hotel.twitter + '/status/';
 
             for(t; t < length; t++) {
-                tweets += response[t].text;
-                if(t !== length - 1) tweets += ' | ';
+                id = response[t].id_str;
+                txt = response[t].text;
+                img = response[t].user.profile_image_url;
+                tweets += '<li class="tweet">';
+                tweets += '<a href="' + url + id + '" title="@' + hotel.twitter + '" target="_blank">';
+                tweets += '<img src="' + img + '" alt="@' + hotel.twitter + '"> ';
+                tweets += txt + '</a>';
+                tweets += '</li>';
             } // for
 
             hotel.tweets = tweets;
-            document.getElementById('twitter').innerHTML = hotel.tweets;
+            self.displayTweets(hotel.tweets);
 
         },function(){
             hotel.tweets = null;
@@ -741,5 +759,10 @@ app.MapView = function() {
         });
 
     }; // getTweets
+
+    self.displayTweets = function(tweets) {
+        var twitter = document.getElementById('twitter');
+        twitter.innerHTML = tweets;
+    }; // displayTweets
 
 }; // MapView
