@@ -96,6 +96,8 @@ var AJAX = (function(){
             url = url + query;
         } // if
 
+        if(window.console) console.log('AJAX ' + method + ' request: ' + url);
+
         // Called when the request succeeds
         self.onload = function(e) {
             var result = '';

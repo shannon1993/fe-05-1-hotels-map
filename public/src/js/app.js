@@ -327,7 +327,6 @@ app.ViewModel = function() {
 
         // Reset the twitter ticker
         document.getElementById('twitter').innerHTML = '';
-        document.getElementById('twitter').className = '';
 
         // Copy the original hotel list array
         self.filterList(self.hotelList());

@@ -590,6 +590,7 @@ aside .icon-close:hover {
 
 #tickerContainer:hover #ticker {
     -webkit-animation-play-state: paused;
+            animation-play-state: paused;
 }
 
 #ticker {
@@ -601,9 +602,23 @@ aside .icon-close:hover {
 @-webkit-keyframes scroll_tweets {
     0% {
         -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0);
     }
     100% {
         -webkit-transform: translate3d(-250%, 0, 0);
+        transform: translate3d(-250%, 0, 0);
+    }
+
+}
+
+@keyframes scroll_tweets {
+    0% {
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0);
+    }
+    100% {
+        -webkit-transform: translate3d(-250%, 0, 0);
+        transform: translate3d(-250%, 0, 0);
     }
 
 }
