@@ -55,6 +55,8 @@ var $jsonp = (function(){
  *
  * If the browser supports the json responseType property,
  * then we don't need to do JSON.parse.
+ *
+ * @return {object} - json
  */
 var AJAX = (function(){
 
@@ -125,11 +127,11 @@ var AJAX = (function(){
             var desc = '';
             // https://xhr.spec.whatwg.org/#dom-xmlhttprequest-readystate
             switch (self.readyState) {
-            case 0: desc = 'UNSENT'; break;
-            case 1: desc = 'OPENED'; break;
-            case 2: desc = 'HEADERS_RECEIVED'; break;
-            case 3: desc = 'LOADING'; break;
-            case 4: desc = 'DONE'; break;
+                case 0: desc = 'UNSENT'; break;
+                case 1: desc = 'OPENED'; break;
+                case 2: desc = 'HEADERS_RECEIVED'; break;
+                case 3: desc = 'LOADING'; break;
+                case 4: desc = 'DONE'; break;
             }
 
             // Only print msg if the console exists

@@ -33,7 +33,7 @@ curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_HTTPHEADER,array('Authorization: Bearer ' . $bearer_token));
 // CURLOPT_RETURNTRANSFER- TRUE to return the transfer as a string of the return value of curl_exec().
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//CURLOPT_SSL_VERIFYPEER- Set FALSE to stop cURL from verifying the peer's certificate.
+// CURLOPT_SSL_VERIFYPEER- Set FALSE to stop cURL from verifying the peer's certificate.
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
 // Execute the  Curl session
