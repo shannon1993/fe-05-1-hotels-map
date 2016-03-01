@@ -1307,6 +1307,13 @@ For real world use you’d want a backend that hides your keys</p>
         <span class="hljs-keyword">return</span> template;
     }; <span class="hljs-comment">// getTemplate</span>
 
+    <span class="hljs-comment">/**
+     * Sends a GET request to api.php which accesses the Twitter API and returns JSON data.
+     *
+     * @function app.MapView.getTweets
+     * @memberof app.MapView
+     * @return {object} - JSON of the user's timeline
+     */</span>
     self.getTweets = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">hotel</span>) </span>{
         <span class="hljs-keyword">var</span> twitter_api_wrapper = <span class="hljs-string">'http://topwidget.co/twitter/api.php'</span>;
         <span class="hljs-keyword">var</span> data = {
@@ -1357,6 +1364,12 @@ For real world use you’d want a backend that hides your keys</p>
 
     }; <span class="hljs-comment">// getTweets</span>
 
+    <span class="hljs-comment">/**
+     * Adds tweets inside the header above the map
+     *
+     * @function app.MapView.displayTweets
+     * @memberof app.MapView
+     */</span>
     self.displayTweets = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">tweets</span>) </span>{
         <span class="hljs-keyword">var</span> twitter = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'twitter'</span>);
         twitter.innerHTML = tweets;
