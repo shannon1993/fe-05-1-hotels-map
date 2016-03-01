@@ -721,6 +721,13 @@ app.MapView = function() {
         return template;
     }; // getTemplate
 
+    /**
+     * Sends a GET request to api.php which accesses the Twitter API and returns JSON data.
+     *
+     * @function app.MapView.getTweets
+     * @memberof app.MapView
+     * @return {object} - JSON of the user's timeline
+     */
     self.getTweets = function(hotel) {
         var twitter_api_wrapper = 'http://topwidget.co/twitter/api.php';
         var data = {
@@ -759,6 +766,12 @@ app.MapView = function() {
 
     }; // getTweets
 
+    /**
+     * Adds tweets inside the header above the map
+     *
+     * @function app.MapView.displayTweets
+     * @memberof app.MapView
+     */
     self.displayTweets = function(tweets) {
         var twitter = document.getElementById('twitter');
         twitter.innerHTML = tweets;
