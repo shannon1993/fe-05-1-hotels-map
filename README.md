@@ -10,8 +10,12 @@ Web app to display a selection of Las Vegas hotels inspected and rated by [AAA](
 * Hotel tweets from Twitter
 
 ## How to run
+#### Local
 1. Navigate to the `public` folder
 2. Open the `index.html` in either the `src` or `dist` folders
+
+#### Online
+1. http://m-coding.github.io/fe-05-hotels-map/
 
 ## How to re-build
 1. Requires [Node.js](https://nodejs.org/en/download/) and [Gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
