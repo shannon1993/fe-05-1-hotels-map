@@ -59,6 +59,7 @@ app.Hotel = function() {
      * @type Object
      * @property {string} name - Name of hotel
      * @property {string} id - Yelp business ID
+     * @property {string} twitter - Twitter screen name
      * @property {object} location - Hotel coordinates
      * @property {number} location.lat - Latitude
      * @property {number} location.lng - Longitude
