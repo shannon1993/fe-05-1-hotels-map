@@ -11,6 +11,8 @@ app.ViewModel = function() {
 
     var self = this;
 
+    self.timeout = ko.observable(false);
+    self.dispMsg = ko.observable('');
     self.hotelList = ko.observableArray();
     self.filterList = ko.observableArray();
     self.filterText = ko.observable('');

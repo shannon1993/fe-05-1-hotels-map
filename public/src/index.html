@@ -77,11 +77,17 @@
       </aside>
 
       <!-- Google Map -->
+      <!-- ko ifnot: timeout -->
       <figure id="map">
           <figcaption id="spinnerContainer">
               Loading Map <div id="spinner"></div> Please Wait
           </figcaption>
       </figure>
+      <!-- /ko -->
+
+      <!-- ko if: timeout -->
+      <figure id="map" data-bind="html: dispMsg"></figure>
+      <!-- /ko -->
     </main>
 
     <!-- build:js js/app.min.js -->

@@ -70,9 +70,10 @@ app.Hotel = function() {
 
         }, function (errorObject) {
             // Called when client does not have permission to read this data
-            var errMsg = 'Could not load hotel data. The read failed with error code: ';
-                errMsg += errorObject.code + '. Please contact the webmaster.';
-            document.getElementById('map').innerHTML = errMsg;
+            // This will ONLY display if Firebase rules for READ is set to FALSE
+            var errMsg = 'Error code: ' + errorObject.code + '. <br>';
+                errMsg += 'You do not have permission to read hotel data. Please contact the webmaster to gain access.';
+            app.vm.dispMsg(errMsg);
         });
     }; // init
 
@@ -83,13 +84,13 @@ app.Hotel = function() {
      * @memberof app.Hotel
      */
     self.reqTimeout = function () {
-        var m = document.getElementById('map');
-        var errMsg = 'Map request timed out. Check your connection and refresh the page.';
+        // This will display if client cannot connect to Firebase after 10 seconds
+        var errMsg = 'Firebase server request timed out. <br> Check your connection and refresh the page.';
         setTimeout( function() {
-            // Check to see if the map is loaded
-            if(m.children[0].nodeName === 'FIGCAPTION') {
-               // Display error message if no map found
-               m.innerHTML = errMsg;
+            // Check to see if the hotel data is loaded and display error message if no hotels
+            if(self.hotels().length === 0) {
+                app.vm.timeout(true);
+                app.vm.dispMsg(errMsg);
             }
         }, 10000);
     }; // reqTimeout
