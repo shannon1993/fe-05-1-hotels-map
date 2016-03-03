@@ -11,7 +11,7 @@
  * one I provided to access the Twitter API.
  *
  * @author  m-coding
- * @link    https://github.com/m-coding/fe-05-hotels-map
+ * @link    https://github.com/m-coding/fe-05-1-hotels-map
  *
  */
 

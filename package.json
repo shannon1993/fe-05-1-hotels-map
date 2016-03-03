@@ -1,11 +1,11 @@
 {
-  "name": "fe-05-hotels-map",
+  "name": "fe-05-1-hotels-map",
   "version": "4.0.0",
   "author": "m-coding",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/m-coding/fe-05-hotels-map.git"
+    "url": "https://github.com/m-coding/fe-05-1-hotels-map.git"
   },
   "devDependencies": {
     "del": "^2.2.0",
