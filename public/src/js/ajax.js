@@ -117,7 +117,7 @@ var AJAX = (function(){
         }; // onload
 
         // Called when a resource failed to load
-        self.error = function() {
+        self.onerror = function() {
             fail();
             if(window.console) console.log('AJAX error event called with status: ' + self.status + ' ' + self.statusText);
         };

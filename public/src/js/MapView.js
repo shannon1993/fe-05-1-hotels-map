@@ -271,8 +271,12 @@ app.MapView = function() {
             self.displayTweets(hotel.tweets);
 
         },function(){
+            var url = 'https://twitter.com/' + hotel.twitter;
+            var msg = '<li><a href="' + url + '" target="_blank">Failed to load recent tweets for @';
+                msg += hotel.twitter + '. Click here to view tweets on twitter.com.</a></li>';
             hotel.tweets = null;
-            if(window.console) console.log("AJAX request failed.");
+            self.displayTweets(msg);
+            if(window.console) console.log("AJAX GET request failed.");
         });
 
     }; // getTweets
