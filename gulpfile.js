@@ -25,7 +25,12 @@ gulp.task('cleanDryRun', function() {
 
 /** JavasScript Linter **/
 gulp.task('lint', function () {
-    return gulp.src(['public/src/js/app.js','!node_modules/**'])
+    return gulp.src(['public/src/js/app.js',
+                     'public/src/js/ajax.js',
+                     'public/src/js/Hotel.js',
+                     'public/src/js/ViewModel.js',
+                     'public/src/js/HotelView.js',
+                     'public/src/js/MapView.js'])
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
@@ -52,6 +57,6 @@ gulp.task('copy-fonts', ['copy-js'], function() {
 });
 
 gulp.task('copy-images', ['copy-fonts'], function() {
-    return gulp.src('public/src/images/*.png')
+    return gulp.src('public/src/images/*.*')
         .pipe(gulp.dest('public/dist/images'));
 });
