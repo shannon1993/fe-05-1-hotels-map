@@ -284,8 +284,8 @@ app.MapView = function() {
      * @memberof app.MapView
      */
     self.displayTweets = function(tweets) {
-        var twitter = document.getElementById('twitter');
-        twitter.innerHTML = tweets;
+        app.vm.showTicker(true);
+        app.vm.hotelTweets(tweets);
     }; // displayTweets
 
 }; // MapView

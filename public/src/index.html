@@ -20,8 +20,8 @@
         <i data-bind="click: slideIn" class="icons icon-menu big"></i>
         <!-- Twitter Ticker -->
         <div id="tickerContainer">
-          <div id="ticker">
-            <ul id="twitter"></ul>
+          <div id="ticker" data-bind="visible: showTicker">
+            <ul id="twitter" data-bind="html: hotelTweets"></ul>
           </div>
         </div>
       </nav>
@@ -77,6 +77,8 @@
       </aside>
 
       <!-- Google Map -->
+      <!-- data-bind="template: {name: getTemplate($data), data: $data}" -->
+      <!-- , visible: dispMsgStyle($element, $data) -->
       <!-- ko ifnot: timeout -->
       <figure id="map">
           <figcaption id="spinnerContainer">
@@ -89,6 +91,11 @@
       <figure id="map" data-bind="html: dispMsg"></figure>
       <!-- /ko -->
     </main>
+
+    <!-- KO Templates -->
+    <!-- script id="errorHandlerTemplate" type="text/html" -->
+    <!-- There was an error loading the <b data-bind="$data"></b> script. -->
+    <!-- /script -->
 
     <!-- build:js js/app.min.js -->
     <script src="js/app.js" onerror="app.errorHandler('app')"></script>

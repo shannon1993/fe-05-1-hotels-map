@@ -11,6 +11,8 @@ app.ViewModel = function() {
 
     var self = this;
 
+    self.showTicker = ko.observable(false);
+    self.hotelTweets = ko.observable('');
     self.timeout = ko.observable(false);
     self.dispMsg = ko.observable('');
     self.hotelList = ko.observableArray();
@@ -192,7 +194,7 @@ app.ViewModel = function() {
         var match = -1;
 
         // Reset the twitter ticker
-        document.getElementById('twitter').innerHTML = '';
+        self.showTicker(false);
 
         // Copy the original hotel list array
         self.filterList(self.hotelList());
