@@ -100,7 +100,7 @@ app.ViewModel = function() {
      * @memberof app.ViewModel
      */
     self.slideIn = function() {
-        self.slideClass(app.hv.slideInLeft());
+        self.slideClass('animated slideInLeft no-overlay');
         google.maps.event.trigger(app.mv.map,'resize');
     };
 
@@ -112,7 +112,7 @@ app.ViewModel = function() {
      * @memberof app.ViewModel
      */
     self.slideOut = function() {
-        self.slideClass(app.hv.slideOutLeft());
+        self.slideClass('animated fadeOutLeft overlay');
         google.maps.event.trigger(app.mv.map,'resize');
         app.mv.map.setCenter(app.mv.currentLocation);
         if(window.screen.height > 400) app.mv.map.panBy(0, -120);

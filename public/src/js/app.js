@@ -14,7 +14,6 @@ var app = app || {};
 app.init = function() {
     app.model = new app.Hotel();
     app.vm = new app.ViewModel();
-    app.hv = new app.HotelView();
     app.mv = new app.MapView();
 
     // Get the hotel data
