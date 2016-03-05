@@ -3,9 +3,9 @@
 Web app to display a selection of Las Vegas hotels inspected and rated by [AAA](http://newsroom.aaa.com/diamond-ratings/), which uses the [Diamond Rating](http://newsroom.aaa.com/diamond-ratings/diamond-rating-definitions/) system.
 
 #### Features
+* Mobile first design
 * Filter by hotel name
 * Filter by diamond rating
-* Mobile first design
 * Hotel reviews from Yelp
 * Hotel tweets from Twitter
 
