@@ -25,6 +25,11 @@ app.ViewModel = function() {
         {ratingValue: 3, icon: 'aaa', color: 'green'},
         {ratingValue: 2, icon: 'aa', color: 'purple'},
     ]);
+    self.slideClass = ko.observable('hidden overlay');
+    self.showDef = ko.observable(false);
+    self.showName = ko.observable(true);
+    self.showRating = ko.observable(false);
+    self.showList = ko.observable(true);
 
     /**
      * @function app.ViewModel.getRatings
@@ -95,7 +100,7 @@ app.ViewModel = function() {
      * @memberof app.ViewModel
      */
     self.slideIn = function() {
-        app.hv.slideInLeft();
+        self.slideClass(app.hv.slideInLeft());
         google.maps.event.trigger(app.mv.map,'resize');
     };
 
@@ -107,7 +112,7 @@ app.ViewModel = function() {
      * @memberof app.ViewModel
      */
     self.slideOut = function() {
-        app.hv.slideOutLeft();
+        self.slideClass(app.hv.slideOutLeft());
         google.maps.event.trigger(app.mv.map,'resize');
         app.mv.map.setCenter(app.mv.currentLocation);
         if(window.screen.height > 400) app.mv.map.panBy(0, -120);
@@ -159,23 +164,13 @@ app.ViewModel = function() {
     };
 
     /**
-     * Displays the Diamond Rating Definitions.
+     * Toggles display the Diamond Rating Definitions.
      *
      * @function app.ViewModel.open
      * @memberof app.ViewModel
      */
-    self.open = function() {
-        app.hv.openInfo();
-    };
-
-    /**
-     * Hides the Diamond Rating Definitions.
-     *
-     * @function app.ViewModel.close
-     * @memberof app.ViewModel
-     */
-    self.close = function() {
-        app.hv.closeInfo();
+    self.toggleDef = function() {
+        self.showDef(!self.showDef());
     };
 
     /**

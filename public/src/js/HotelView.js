@@ -11,11 +11,9 @@ app.HotelView = function() {
 
     var self = this;
 
-    self.slide = document.getElementById('slide');
     self.animateIn = 'animated slideInLeft no-overlay';
     self.animateOut = 'animated fadeOutLeft overlay';
     self.h3 = document.getElementsByTagName('h3');
-    self.def = document.getElementById('definitions');
 
     /**
      * Updates the class property to slide the menu in.
@@ -24,7 +22,7 @@ app.HotelView = function() {
      * @memberof app.HotelView
      */
     self.slideInLeft = function() {
-        self.slide.className = self.animateIn;
+        return self.animateIn;
     };
 
     /**
@@ -34,27 +32,7 @@ app.HotelView = function() {
      * @memberof app.HotelView
      */
     self.slideOutLeft = function() {
-        self.slide.className = self.animateOut;
-    };
-
-    /**
-     * Adds 'block' to display property.
-     *
-     * @function app.HotelView.openInfo
-     * @memberof app.HotelView
-     */
-    self.openInfo = function() {
-        self.def.style.display = 'block';
-    };
-
-    /**
-     * Removes 'block' from display property.
-     *
-     * @function app.HotelView.closeInfo
-     * @memberof app.HotelView
-     */
-    self.closeInfo = function() {
-        self.def.style.display = '';
+        return self.animateOut;
     };
 
     /**
