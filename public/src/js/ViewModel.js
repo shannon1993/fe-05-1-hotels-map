@@ -164,9 +164,39 @@ app.ViewModel = function() {
     };
 
     /**
+     * Toggles display of the Hotel Name search
+     *
+     * @function app.ViewModel.toggleName
+     * @memberof app.ViewModel
+     */
+    self.toggleName = function() {
+        self.showName(!self.showName());
+    };
+
+    /**
+     * Toggles display of the Diamond Rating filter
+     *
+     * @function app.ViewModel.toggleRating
+     * @memberof app.ViewModel
+     */
+    self.toggleRating = function() {
+        self.showRating(!self.showRating());
+    };
+
+    /**
+     * Toggles display of the Diamond Rating Definitions.
+     *
+     * @function app.ViewModel.toggleList
+     * @memberof app.ViewModel
+     */
+    self.toggleList = function() {
+        self.showList(!self.showList());
+    };
+
+    /**
      * Toggles display the Diamond Rating Definitions.
      *
-     * @function app.ViewModel.open
+     * @function app.ViewModel.toggleDef
      * @memberof app.ViewModel
      */
     self.toggleDef = function() {

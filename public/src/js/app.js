@@ -20,9 +20,6 @@ app.init = function() {
     // Get the hotel data
     app.model.init();
 
-    // Init Hotel View click event listeners
-    app.hv.init();
-
     // Activate Knockout bindings on the ViewModel
     ko.applyBindings(app.vm);
 };
