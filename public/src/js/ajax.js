@@ -119,7 +119,7 @@ var AJAX = (function(){
         // Called when a resource failed to load
         self.onerror = function() {
             fail();
-            if(window.console) console.log('AJAX error event called with status: ' + self.status + ' ' + self.statusText);
+            if(window.console) console.log('AJAX onerror event called with status: ' + self.status + ' ' + self.statusText);
         };
 
         // Called when property readyState of XMLHttpRequest (self) changes

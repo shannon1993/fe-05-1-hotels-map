@@ -29,7 +29,6 @@ gulp.task('lint', function () {
                      'public/src/js/ajax.js',
                      'public/src/js/Hotel.js',
                      'public/src/js/ViewModel.js',
-                     'public/src/js/HotelView.js',
                      'public/src/js/MapView.js'])
         .pipe(eslint())
         .pipe(eslint.format())
