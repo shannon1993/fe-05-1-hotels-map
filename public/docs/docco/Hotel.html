@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Hotel.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="Hotel.html">
+                  Hotel.js
+                </a>
+              
+                
+                <a class="source" href="MapView.html">
+                  MapView.js
+                </a>
+              
+                
+                <a class="source" href="ViewModel.html">
+                  ViewModel.js
+                </a>
+              
+                
+                <a class="source" href="ajax.html">
+                  ajax.js
+                </a>
+              
+                
+                <a class="source" href="app.html">
+                  app.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>Hotel.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> app = app || {};
+
+<span class="hljs-comment">/**
+ * Hotel
+ * @name app.Hotel
+ * @class Hotel
+ * @memberof app
+ */</span>
+app.Hotel = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{<span class="hljs-meta">
+    'use strict'</span>;
+
+    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
+
+    self.hotels = ko.observableArray();
+    self.yelp = {};
+
+    <span class="hljs-comment">/**
+     * @typedef Hotels
+     * @type Object
+     * @property {string} name - Name of hotel
+     * @property {string} id - Yelp business ID
+     * @property {string} twitter - Twitter screen name
+     * @property {object} location - Hotel coordinates
+     * @property {number} location.lat - Latitude
+     * @property {number} location.lng - Longitude
+     * @property {number} diamonds - Diamond rating of hotel
+     */</span>
+
+    <span class="hljs-comment">/**
+     * Retrieves the hotels json from Firebase server.
+     *
+     * @function app.Hotel.init
+     * @memberof app.Hotel
+     * @see {@link https://www.firebase.com/docs/web/guide/retrieving-data.html#section-reading-once}
+     * @see {@link https://www.firebase.com/docs/web/api/query/once.html}
+     * @returns {Hotels} - Hotel data in json notation
+     */</span>
+    self.init = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">var</span> hotelsRef;
+        <span class="hljs-keyword">var</span> hotelsJSON;
+        <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">var</span> hotel = [];
+        <span class="hljs-keyword">var</span> length = <span class="hljs-number">0</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Start the 10 second timer</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        self.reqTimeout();
+
+        hotelsRef = <span class="hljs-keyword">new</span> Firebase(<span class="hljs-string">'https://crackling-heat-3113.firebaseio.com'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Read the data only once</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        hotelsRef.once(<span class="hljs-string">'value'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dataSnapshot</span>) </span>{
+
+            self.yelp = dataSnapshot.child(<span class="hljs-string">'yelp'</span>).val();
+
+            hotelsJSON = dataSnapshot.child(<span class="hljs-string">'hotels'</span>).val();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Store all the hotel data in app.Hotel.hotels</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            length = hotelsJSON.length;
+            <span class="hljs-keyword">for</span> (i; i &lt; length; i++) {
+                hotel = hotelsJSON[i];
+                hotel.content = <span class="hljs-literal">null</span>;
+                hotel.tweets = <span class="hljs-literal">null</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Save each hotel into a Knockout Observable Array</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                self.hotels.push(hotel);
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Initialize the map with the hotels</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            app.vm.init();
+
+        }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">errorObject</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Called when client does not have permission to read this data
+This will ONLY display if Firebase rules for READ is set to FALSE</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">var</span> errMsg = <span class="hljs-string">'Error code: '</span> + errorObject.code + <span class="hljs-string">'. &lt;br&gt;'</span>;
+                errMsg += <span class="hljs-string">'You do not have permission to read hotel data. Please contact the webmaster to gain access.'</span>;
+            app.vm.dispMsg(errMsg);
+        });
+    }; <span class="hljs-comment">// init</span>
+
+    <span class="hljs-comment">/**
+     * Timer that displays an error message if map has not loaded.
+     *
+     * @function app.Hotel.reqTimeout
+     * @memberof app.Hotel
+     */</span>
+    self.reqTimeout = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>This will display if client cannot connect to Firebase after 10 seconds</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> errMsg = <span class="hljs-string">'Firebase server request timed out. &lt;br&gt; Check your connection and refresh the page.'</span>;
+        setTimeout( <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Check to see if the hotel data is loaded and display error message if no hotels</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span>(self.hotels().length === <span class="hljs-number">0</span>) {
+                app.vm.timeout(<span class="hljs-literal">true</span>);
+                app.vm.dispMsg(errMsg);
+            }
+        }, <span class="hljs-number">10000</span>);
+    }; <span class="hljs-comment">// reqTimeout</span>
+
+}; <span class="hljs-comment">// Hotel</span></pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

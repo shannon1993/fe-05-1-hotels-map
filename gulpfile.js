@@ -36,7 +36,7 @@ gulp.task('lint', function () {
         .pipe(eslint.failAfterError());
 });
 
-/** REPLACE **/
+/** MINIFY, CONCAT, and REPLACE HTML **/
 gulp.task('replace-html', ['lint'], function() {
     return gulp.src('public/src/index.html')
         .pipe(useref())
