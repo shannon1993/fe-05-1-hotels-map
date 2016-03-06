@@ -148,7 +148,7 @@ app.MapView = function() {
             self.map.setCenter(hotel.location);
 
             // On small screens pan the map down 120px
-            if(window.screen.height > 400 && window.screen.width < 400) self.map.panBy(0, -120);
+            if(window.screen.height > 415 && window.screen.width < 415) self.map.panBy(0, -120);
         });
 
     }; // setInfoWin
