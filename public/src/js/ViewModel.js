@@ -94,29 +94,37 @@ app.ViewModel = function() {
     };
 
     /**
-     * Slides in the filter menu and resizes the map.
+     * Slides in the filter menu and re-centers map on current marker.
      *
      * @function app.ViewModel.slideIn
      * @memberof app.ViewModel
      */
     self.slideIn = function() {
         self.slideClass('animated slideInLeft no-overlay');
-        google.maps.event.trigger(app.mv.map,'resize');
-        if(app.mv.currentLocation) app.mv.map.setCenter(app.mv.currentLocation);
+        self.centerPanMap();
     };
 
     /**
-     * Slides out the filter menu, resizes the map, and centers the map on the marker.
-     * If the screen height is greater than 400px, it will pan the map down 120px to make room for the infoWindow.
+     * Slides out the filter menu and re-centers map on current marker.
      *
      * @function app.ViewModel.slideOut
      * @memberof app.ViewModel
      */
     self.slideOut = function() {
         self.slideClass('animated fadeOutLeft overlay');
+        self.centerPanMap();
+    };
+
+    /**
+     * On small screens, pan the map down 120px to make room for the infoWindow.
+     *
+     * @function app.ViewModel.centerPanMap
+     * @memberof  app.ViewModel
+     */
+    self.centerPanMap = function() {
         google.maps.event.trigger(app.mv.map,'resize');
         if(app.mv.currentLocation) app.mv.map.setCenter(app.mv.currentLocation);
-        if(window.screen.height > 400) app.mv.map.panBy(0, -120);
+        if(window.screen.height > 400 && window.screen.width < 400) app.mv.map.panBy(0, -120);
     };
 
     /**

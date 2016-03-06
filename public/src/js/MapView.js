@@ -13,7 +13,6 @@ app.MapView = function() {
 
     self.infoWindow = null;
     self.currentLocation = null;
-    self.currentMapCenter = null;
     self.originalMapCenter = {lat: 36.1049534, lng: -115.1724043};
     self.mapDiv = document.getElementById('map');
     self.mapOptions = {
@@ -33,7 +32,7 @@ app.MapView = function() {
     self.bounds = new google.maps.LatLngBounds();
 
     /**
-     * Displays a Google Map and adds resize event listeners.
+     * Displays a Google Map and adds resize event listener.
      *
      * @function app.MapView.init
      * @memberof app.MapView
@@ -121,6 +120,7 @@ app.MapView = function() {
      * Gets the content or reads already set content for the infoWindow.
      * Sets currentLocation, and creates a click event listener.
      * Gets the hotel's recent tweets and inserts them into the page.
+     * Centers map on marker and pans map down on small screens.
      *
      * @function app.MapView.setInfoWin
      * @memberof app.MapView
@@ -146,6 +146,9 @@ app.MapView = function() {
 
             // Re-center the map on the marker that was clicked
             self.map.setCenter(hotel.location);
+
+            // On small screens pan the map down 120px
+            if(window.screen.height > 400 && window.screen.width < 400) self.map.panBy(0, -120);
         });
 
     }; // setInfoWin
