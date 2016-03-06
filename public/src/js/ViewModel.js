@@ -137,9 +137,6 @@ app.ViewModel = function() {
      * @memberof app.ViewModel
      */
     self.gotoHotel = function(hotel) {
-        // Re-center the map on the marker that was clicked
-        app.mv.map.setCenter(hotel.location);
-
         // Pan down 120px (keeps tall infoWindow from getting cutoff)
         // Do not pan if in landscape mode
         if(window.screen.height > 400) app.mv.map.panBy(0, -120);

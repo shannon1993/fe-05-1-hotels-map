@@ -138,6 +138,9 @@ app.MapView = function() {
                 self.getTweets(hotel);
             else
                 self.displayTweets(hotel.tweets);
+
+            // Re-center the map on the marker that was clicked
+            self.map.setCenter(hotel.location);
         });
 
     }; // setInfoWin
