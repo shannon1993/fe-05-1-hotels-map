@@ -124,7 +124,7 @@ app.ViewModel = function() {
     self.centerPanMap = function() {
         google.maps.event.trigger(app.mv.map,'resize');
         if(app.mv.currentLocation) app.mv.map.setCenter(app.mv.currentLocation);
-        if(window.screen.height > 415 && window.screen.width < 415) app.mv.map.panBy(0, -120);
+        if(window.screen.height > 400 && window.screen.width < 415) app.mv.map.panBy(0, -120);
     };
 
     /**
@@ -148,7 +148,7 @@ app.ViewModel = function() {
     self.gotoHotel = function(hotel) {
         // Pan down 120px (keeps tall infoWindow from getting cutoff)
         // Do not pan if in landscape mode
-        if(window.screen.height > 415 && window.screen.width < 415) app.mv.map.panBy(0, -120);
+        if(window.screen.height > 400 && window.screen.width < 415) app.mv.map.panBy(0, -120);
 
         app.mv.infoWindow.close();
 
