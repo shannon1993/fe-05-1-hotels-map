@@ -30,6 +30,7 @@ app.MapView = function() {
     // Source: https://sites.google.com/site/gmapsdevelopment/
     self.markerUrl = 'http://maps.google.com/mapfiles/ms/icons/';
     self.markerColors = ['pink', 'blue', 'purple', 'green', 'yellow', 'red'];
+    self.bounds = new google.maps.LatLngBounds();
 
     /**
      * Displays a Google Map and adds resize event listeners.
@@ -48,15 +49,11 @@ app.MapView = function() {
         // Create the markers
         self.createMarkers();
 
-        // Trigger map resize if the window changes size
-        google.maps.event.addDomListener(window, 'resize', function() {
-            google.maps.event.trigger(self.map, 'resize');
-        });
-
         // Update center of the map on resize
-        google.maps.event.addListener(self.map, 'resize', function () {
-            self.currentMapCenter = self.map.getCenter();
-            self.map.setCenter(self.currentMapCenter);
+        google.maps.event.addDomListener(window, "resize", function() {
+            var center = self.map.getCenter();
+            google.maps.event.trigger(self.map, "resize");
+            self.map.setCenter(center);
         });
     }; // initMap
 
@@ -88,8 +85,16 @@ app.MapView = function() {
                 icon:  self.markerUrl + hotel.color + '.png'
             }); // marker
 
+            // Extend the bounds
+            self.bounds.extend(new google.maps.LatLng(hotel.location));
+
+            // Setup the mark's infoWindow
             self.setInfoWin(hotel);
         } // for
+
+        // Adjust map to fit inside the marker bounds
+        self.map.fitBounds(self.bounds);
+
     }; // createMarkers
 
     /**
