@@ -102,6 +102,7 @@ app.ViewModel = function() {
     self.slideIn = function() {
         self.slideClass('animated slideInLeft no-overlay');
         google.maps.event.trigger(app.mv.map,'resize');
+        if(app.mv.currentLocation) app.mv.map.setCenter(app.mv.currentLocation);
     };
 
     /**
@@ -114,7 +115,7 @@ app.ViewModel = function() {
     self.slideOut = function() {
         self.slideClass('animated fadeOutLeft overlay');
         google.maps.event.trigger(app.mv.map,'resize');
-        app.mv.map.setCenter(app.mv.currentLocation);
+        if(app.mv.currentLocation) app.mv.map.setCenter(app.mv.currentLocation);
         if(window.screen.height > 400) app.mv.map.panBy(0, -120);
     };
 
